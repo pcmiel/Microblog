@@ -4,3 +4,13 @@
 *.jar
 *.war
 *.ear
+.classpath
+.project
+*.lck
+*.log
+*.properties
+*.script
+
+# Folders #
+.settings/
+target/
