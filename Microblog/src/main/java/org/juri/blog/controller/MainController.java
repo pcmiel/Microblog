@@ -9,6 +9,7 @@ import org.juri.blog.entity.Message;
 import org.juri.blog.service.MessageService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,12 @@ public class MainController {
 
 	@Resource(name = "messageService")
 	private MessageService messageService;
+	
+	@RequestMapping(value="/login", method = RequestMethod.GET)
+	public String login(ModelMap model) { 
+		return "login";
+ 
+	}
 
 	@RequestMapping(value = "/message", method = RequestMethod.GET)
 	public String getMessage(Model model) {

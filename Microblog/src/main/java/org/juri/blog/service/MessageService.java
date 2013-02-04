@@ -2,7 +2,6 @@ package org.juri.blog.service;
 
 import org.juri.blog.entity.Message;
 
-import java.sql.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
