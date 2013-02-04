@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.juri.blog.entity.Message;
 import org.juri.blog.service.MessageService;
 import org.springframework.stereotype.Controller;
@@ -14,28 +14,37 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 // @RequestMapping("/main")
 public class MainController {
 
-	protected static Logger logger = Logger.getLogger("controller");
+	//protected static Logger logger = Logger.getLogger("controller");
 
 	@Resource(name = "messageService")
 	private MessageService messageService;
 	
-	@RequestMapping(value="/login", method = RequestMethod.GET)
-	public String login(ModelMap model) { 
+	@RequestMapping(value="/login")
+	public String login() {
 		return "login";
+	}
+	
+	@RequestMapping(value="/loginfailed", method = RequestMethod.GET)
+	public String loginerror(ModelMap model) { 
+		model.addAttribute("error", "true");
+		return "login"; 
+	}
  
+	@RequestMapping(value="/logout", method = RequestMethod.GET)
+	public String logout(ModelMap model) { 
+		return "login"; 
 	}
 
 	@RequestMapping(value = "/message", method = RequestMethod.GET)
 	public String getMessage(Model model) {
 
-		logger.debug("Received request to show all messages");
+		//logger.debug("Received request to show all messages");
 
 		List<Message> message = messageService.getAll();
 
@@ -57,6 +66,6 @@ public class MainController {
 				+ message.getNews());
 		messageService.add(message.getTitle(), message.getNews(), 0);
 
-		return "redirect:message.html";
+		return "redirect:message";
 	}
 }

@@ -8,18 +8,15 @@
 	http://www.springframework.org/schema/security/spring-security-3.0.xsd">
  
 	<http auto-config="true">
-		<intercept-url pattern="/*" access="ROLE_USER" />
-		<form-login login-page="/spring_security_login" default-target-url="/message"
+		<intercept-url pattern="/message" access="ROLE_MEMBER,ROLE_ADMIN" />
+		<form-login login-page="/login" default-target-url="/message"
 			authentication-failure-url="/loginfailed" />
 		<logout logout-success-url="/logout" />
 	</http>
  
 	<authentication-manager>
-	  <authentication-provider>
-	    <user-service>
-		<user name="juri" password="12" authorities="ROLE_USER" />
-	    </user-service>
-	  </authentication-provider>
+	  <authentication-provider user-service-ref="UserDetailsServiceImpl">
+        </authentication-provider>
 	</authentication-manager>
  
 </beans:beans>

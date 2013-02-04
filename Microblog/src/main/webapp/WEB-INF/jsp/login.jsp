@@ -7,15 +7,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 </head>
-<body onload='document.f.j_username.focus();'>
-	<h3>Login with Username and Password (Custom Page)</h3>
-
+<body
+	onload='document.f.j_userna<h3>Login with Username and Password (Custom Page)</h3>
+ 
 	<c:if test="${not empty error}">
 		<div class="errorblock">
-			Your login attempt was not successful, try again.<br /> Caused :
-			${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
+			Your login attempt was not successful, try again.<br /> Caused : Wrong values
 		</div>
 	</c:if>
+ me.focus();'>
 
 	<form name='f' action="<c:url value='j_spring_security_check' />"
 		method='POST'>
