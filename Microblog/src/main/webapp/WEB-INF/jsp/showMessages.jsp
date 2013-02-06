@@ -20,12 +20,12 @@
 			<td width="150">News</td>
 			<td width="50">AuthorId</td>
 		</tr>
-		<c:forEach items="${message}" var="message">
+		<c:forEach items="${post}" var="post">
 			<tr>
-				<td><c:out value="${message.id}" /></td>
-				<td><c:out value="${message.title}" /></td>
-				<td><c:out value="${message.news}" /></td>
-				<td><c:out value="${message.authorId}" /></td>
+				<td><c:out value="${post.id}" /></td>
+				<td><c:out value="${post.title}" /></td>
+				<td><c:out value="${post.news}" /></td>
+				<td><c:out value="${post.authorId}" /></td>
 			</tr>
 		</c:forEach>
 	</table>

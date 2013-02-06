@@ -39,5 +39,9 @@
 		</table>
 
 	</form>
+
+	<form action="addTest" method='POST'>
+		<input name="submit" type="submit" value="Add test user" />
+	</form>
 </body>
 </html>

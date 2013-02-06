@@ -9,8 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "MESSAGE")
-public class Message implements Serializable{
+@Table(name = "POST")
+public class Post implements Serializable{
 	
 	private static final long serialVersionUID = -5527566248002296042L;
 	

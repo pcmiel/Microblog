@@ -24,7 +24,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "USERS")
-public class User implements UserDetails {
+public class UserDS implements UserDetails {
 
 	private static final long serialVersionUID = 133260785057988071L;
 
@@ -91,15 +91,25 @@ public class User implements UserDetails {
 
 	}
 
-	@Override
+	
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
 	public String getPassword() {
-		// TODO Auto-generated method stub
 		return password;
 	}
 
-	@Override
+	
 	public String getUsername() {
-		// TODO Auto-generated method stub
 		return username;
 	}
 }
