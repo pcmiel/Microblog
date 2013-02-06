@@ -14,16 +14,16 @@
 		<logout logout-success-url="/logout" />
 	</http>
  
-	<!--<authentication-manager>
-	  <authentication-provider user-service-ref="UserDetailsServiceImpl">
-        </authentication-provider>
-	</authentication-manager> -->
 	<authentication-manager>
+	  <authentication-provider user-service-ref="mainService">
+        </authentication-provider>
+	</authentication-manager>
+	<!-- <authentication-manager>
 	  <authentication-provider>
 	    <user-service>
 		<user name="juri" password="12" authorities="ROLE_USER" />
 	    </user-service>
 	  </authentication-provider>
-	</authentication-manager>
+	</authentication-manager>-->
  
 </beans:beans>

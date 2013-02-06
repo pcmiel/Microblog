@@ -1,10 +1,12 @@
 package org.juri.blog.entity;
 
-
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,17 +23,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
 @Entity
 @Table(name = "USERS")
-public class UserDS implements UserDetails {
+public class BlogUser implements UserDetails {
 
 	private static final long serialVersionUID = 133260785057988071L;
-
-	public Set<Authority> getAuthoritySet() {
-		return authoritySet;
-	}
-
+	
+//	public Set<Authority> getAuthoritySet() {
+//		return authoritySet;
+//	}
 
 	@Id
 	@GeneratedValue
@@ -46,14 +46,11 @@ public class UserDS implements UserDetails {
 
 	@Column(name = "ENABLED")
 	private Boolean enabled;
-	
-	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-	@JoinTable(name = "USER_AUTHORITIES", 
-			joinColumns =  
-			@JoinColumn(name = "USER_ID") , 
-			inverseJoinColumns = { @JoinColumn(name = "AUTHORITY_ID") })
-	private Set<Authority> authoritySet;
-	
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "USER_AUTHORITIES", joinColumns = { @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "AUTHORITY_ID") })
+	//private List<Authority> authoritySet;
+	//private Set<Authority> authoritySet;
 	private transient Collection<GrantedAuthority> authorities;
 
 	@Transient
@@ -92,6 +89,18 @@ public class UserDS implements UserDetails {
 	}
 
 	
+//	@Transient
+//	public void setUserAuthorities(List<String> authorities) {
+//		Set<Authority> listOfAuthorities = new  HashSet<Authority>();
+//		for (String role : authorities) {
+//			Authority auth = new Authority();
+//			auth.setAuthority(role);
+//			listOfAuthorities.add(auth);
+//		}
+//		this.authoritySet = listOfAuthorities;
+//
+//	}
+	
 	public void setUsername(String username) {
 		this.username = username;
 	}
@@ -108,7 +117,6 @@ public class UserDS implements UserDetails {
 		return password;
 	}
 
-	
 	public String getUsername() {
 		return username;
 	}

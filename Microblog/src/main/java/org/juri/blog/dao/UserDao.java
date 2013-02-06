@@ -1,8 +1,8 @@
 package org.juri.blog.dao;
 
-import org.juri.blog.entity.UserDS;
+import org.juri.blog.entity.BlogUser;
 
 public interface UserDao {
-	UserDS getUserByUserName(String userName);
-	void addNewUser(UserDS user);
+	BlogUser getUserByUserName(String userName);
+	void addNewUser(BlogUser user);
 }

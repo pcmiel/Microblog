@@ -28,9 +28,6 @@ public class MainController {
 	@Resource(name = "mainService")
 	private MainService mainService;
 
-	//@Autowired
-	//private UserDetailsServiceImpl userDetailsServiceImpl;
-
 	@RequestMapping(value = "/login")
 	public String login() {
 		return "login";
@@ -75,12 +72,12 @@ public class MainController {
 		return "redirect:message";
 	}
 
-//	@RequestMapping(value = "/addTest", method = RequestMethod.POST)
-//	public String addTestUsers() {
-//		List<String> authorities = new ArrayList<String>();
-//		authorities.add("ROLE_MEMBER");
-//		authorities.add("ROLE_ADMIN");
-//		userDetailsServiceImpl.addNewUser("admin", "admin", authorities, true);
-//		return "redirect:login";
-//	}
+	@RequestMapping(value = "/addTest", method = RequestMethod.POST)
+	public String addTestUsers() {
+		List<String> authorities = new ArrayList<String>();
+		authorities.add("ROLE_USER");
+		authorities.add("ROLE_ADMIN");
+		mainService.addNewUser("admin", "admin", authorities, true);
+		return "redirect:login";
+	}
 }
