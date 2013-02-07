@@ -10,6 +10,15 @@ import javax.persistence.Table;
 @Table(name = "AUTHORITIES")
 public class Authority {
 	
+	public Authority()
+	{
+	}
+	
+	public Authority(String authority)
+	{
+		this.authority = authority;
+	}
+	
 	@Id
 	@GeneratedValue
 	@Column(name = "AUTHORITY_ID")

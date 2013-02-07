@@ -1,5 +1,6 @@
 package org.juri.blog.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -58,13 +59,20 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 
 	public void addNewUser(String userName, String password,
 			List<String> authorities, Boolean isEnabled) {
-		
+
 		logger.debug("inside service addNewUser()");
-		
+
 		BlogUser user = new BlogUser();
 		user.setUsername(userName);
 		user.setPassword(password);
-		user.setUserAuthorities(authorities);
+
+		Set<Authority> authoritySet = new HashSet<Authority>();
+		for (String role : authorities) {
+			authoritySet.add(new Authority(role));
+		}
+		Authority a = new Authority();
+		user.setAuthoritySet(authoritySet);
+		// user.setUserAuthorities(authorities);
 		user.setEnabled(isEnabled);
 		userDao.addNewUser(user);
 	}
@@ -78,13 +86,15 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 			throw new UsernameNotFoundException("User for username " + userName
 					+ "was not found.");
 		}
-		Collection<GrantedAuthority> authorityList = user.getAuthorities();//getAuthoritySet();
-		
-		Set<GrantedAuthorityImpl> authorities =  new HashSet<GrantedAuthorityImpl>();
-		
-		for (GrantedAuthority auth : authorityList) {
-			authorities.add(new GrantedAuthorityImpl(auth.getAuthority()));
+		Collection<Authority> authorityList = user.getAuthoritySet();
+
+		Set<GrantedAuthorityImpl> authorities = new HashSet<GrantedAuthorityImpl>();
+
+		for (Authority auth : authorityList) {
+			if (auth.getAuthority() != null)
+				authorities.add(new GrantedAuthorityImpl(auth.getAuthority()));
 		}
+
 		return new User(user.getUsername(), user.getPassword(), true, true,
 				true, true, authorities);
 	}

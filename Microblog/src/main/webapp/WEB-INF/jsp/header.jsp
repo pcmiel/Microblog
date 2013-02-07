@@ -1,17 +1,21 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-  <span class="icon-bar"></span>
-  <span class="icon-bar"></span>
-  <span class="icon-bar"></span>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+
+<a class="btn btn-navbar" data-toggle="collapse"
+	data-target=".nav-collapse"> <span class="icon-bar"></span> <span
+	class="icon-bar"></span> <span class="icon-bar"></span>
 </a>
 <a class="brand" href="#">Microblog</a>
-<div class="nav-collapse collapse">  
-  <ul class="nav">
-    <li class="active"><a href="<c:url value="/" />">Home</a></li>
-    <li><a href="<c:url value="/test" />">test1</a></li>
-    <li><a href="<c:url value="/test" />">test2</a></li>
-    <li><a href="<c:url value="/test" />">test3</a></li>
-    <li><a href="<c:url value="/test" />">test4</a></li>
-    <li><a href="<c:url value="/test" />">test5</a></li>
-  </ul>
+<!-- Start of the nav bar content -->
+<div class="nav-collapse">
+	<ul class="nav pull-right">
+		<li><a href="register">Sign Up</a></li>
+		<li><a href="login"><sec:authorize ifAllGranted="ROLE_USER">Welcome <%=request.getUserPrincipal().getName()%></sec:authorize></a></li>
+		<li class="divider-vertical"></li>
+		
+	</ul>
 </div>

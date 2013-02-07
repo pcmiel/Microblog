@@ -9,6 +9,9 @@ import org.juri.blog.entity.*;
 import org.juri.blog.service.*;
 import org.juri.blog.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -73,11 +76,28 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "/addTest", method = RequestMethod.POST)
-	public String addTestUsers() {
+	public String addTestUsers(Model model) {
 		List<String> authorities = new ArrayList<String>();
 		authorities.add("ROLE_USER");
 		authorities.add("ROLE_ADMIN");
+		authorities.add("ROLE_USER1");
+		authorities.add("ROLE_USER2");
 		mainService.addNewUser("admin", "admin", authorities, true);
+		
+		//User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    //String name = user.getUsername();
+	    
+	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	      String name = auth.getName(); //get logged in username
+	 
+	    
+		model.addAttribute("userName", name);
+		
 		return "redirect:login";
+	}
+	
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	public String registerNewUser(){
+		return "register";
 	}
 }

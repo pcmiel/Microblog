@@ -1,7 +1,10 @@
 package org.juri.blog.dao;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -13,6 +16,7 @@ import org.juri.blog.entity.Authority;
 import org.juri.blog.entity.BlogUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,21 +51,32 @@ public class UserDaoImpl implements UserDao {
 
 		Session session = sessionFactory.getCurrentSession();
 
-		Query query = session.createQuery("FROM  Authority");
-		List<Authority> allAuthorities = (List<Authority>) query.list();
 		
-		//addOrUpdateAuthority(user.getAuthorities());
+		//addOrUpdateAuthority(user);
 		session.save(user);
 	}
 
-	private void addOrUpdateAuthority(Collection<GrantedAuthority> authorities) {
+	private void addOrUpdateAuthority(BlogUser user) {
 		logger.debug("inside dao addOrUpdateAuthority()");
-		Session session = sessionFactory.getCurrentSession();
-		for (GrantedAuthority grantedAuthority : authorities) {
-			Authority authority  = new Authority();
-			authority.setAuthority(grantedAuthority.getAuthority());
-			session.save(authority);
-		}
+		
+	
+		//List<String> authorities= new  ArrayList<String>();
+//		authorities.add("ROLE_USER");
+//		authorities.add("ROLE_ADMIN");
+//		authorities.add("ROLE_USER1");
+//		authorities.add("ROLE_ADMIN1");
+//		user.setUserAuthorities(authorities);
+		Set<Authority> authoritySet = new HashSet<Authority>();
+		
+		
+		Authority a = new Authority();
+		a.setAuthority("ROLE_USER");
+		authoritySet.add(a);
+		Authority b = new Authority();
+		b.setAuthority("ROLE_ADMIN");
+		authoritySet.add(b);
+		user.setAuthoritySet(authoritySet);
+		
 	}
 
 }

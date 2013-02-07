@@ -49,10 +49,12 @@ public class BlogUser implements UserDetails {
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "USER_AUTHORITIES", joinColumns = { @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "AUTHORITY_ID") })
-	//private List<Authority> authoritySet;
-	//private Set<Authority> authoritySet;
-	private transient Collection<GrantedAuthority> authorities;
+	private Set<Authority> authoritySet;
+	//private transient Collection<GrantedAuthority> authorities;
 
+	// Spring Security props
+	private transient Collection<GrantedAuthority> authorities;
+	
 	@Transient
 	public Collection<GrantedAuthority> getAuthorities() {
 		return authorities;
@@ -77,6 +79,15 @@ public class BlogUser implements UserDetails {
 	public boolean isEnabled() {
 		return enabled;
 	}
+	
+	public Set<Authority> getAuthoritySet() {
+		return authoritySet;
+	}
+	
+	public void setAuthoritySet(Set<Authority> authoritySet) {
+		this.authoritySet = authoritySet;
+	}
+	
 
 	@Transient
 	public void setUserAuthorities(List<String> authorities) {
