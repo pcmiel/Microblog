@@ -18,31 +18,55 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Size;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.hibernate.validator.constraints.NotEmpty;
+
+
+
+
 
 @Entity
 @Table(name = "USERS")
 public class BlogUser implements UserDetails {
 
 	private static final long serialVersionUID = 133260785057988071L;
-	
-//	public Set<Authority> getAuthoritySet() {
-//		return authoritySet;
-//	}
+
+	// public Set<Authority> getAuthoritySet() {
+	// return authoritySet;
+	// }
 
 	@Id
 	@GeneratedValue
 	@Column(name = "USER_ID")
 	private Long userId;
 
+	@NotEmpty(message = "Login is required!")
+	@Size(min = 3, max = 20, message = "Login length must be between 3 and 40")
 	@Column(name = "USERNAME")
 	private String username;
 
+	@NotEmpty(message = "Password is required!")
+	@Size(min = 4, max = 40, message = "Password length must be between 4 and 40")
 	@Column(name = "PASSWORD")
 	private String password;
+
+	private String confirmPassword;
+	
+
+
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
 
 	@Column(name = "ENABLED")
 	private Boolean enabled;
@@ -50,11 +74,11 @@ public class BlogUser implements UserDetails {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "USER_AUTHORITIES", joinColumns = { @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "AUTHORITY_ID") })
 	private Set<Authority> authoritySet;
-	//private transient Collection<GrantedAuthority> authorities;
+	// private transient Collection<GrantedAuthority> authorities;
 
 	// Spring Security props
 	private transient Collection<GrantedAuthority> authorities;
-	
+
 	@Transient
 	public Collection<GrantedAuthority> getAuthorities() {
 		return authorities;
@@ -79,15 +103,14 @@ public class BlogUser implements UserDetails {
 	public boolean isEnabled() {
 		return enabled;
 	}
-	
+
 	public Set<Authority> getAuthoritySet() {
 		return authoritySet;
 	}
-	
+
 	public void setAuthoritySet(Set<Authority> authoritySet) {
 		this.authoritySet = authoritySet;
 	}
-	
 
 	@Transient
 	public void setUserAuthorities(List<String> authorities) {
@@ -99,19 +122,18 @@ public class BlogUser implements UserDetails {
 
 	}
 
-	
-//	@Transient
-//	public void setUserAuthorities(List<String> authorities) {
-//		Set<Authority> listOfAuthorities = new  HashSet<Authority>();
-//		for (String role : authorities) {
-//			Authority auth = new Authority();
-//			auth.setAuthority(role);
-//			listOfAuthorities.add(auth);
-//		}
-//		this.authoritySet = listOfAuthorities;
-//
-//	}
-	
+	// @Transient
+	// public void setUserAuthorities(List<String> authorities) {
+	// Set<Authority> listOfAuthorities = new HashSet<Authority>();
+	// for (String role : authorities) {
+	// Authority auth = new Authority();
+	// auth.setAuthority(role);
+	// listOfAuthorities.add(auth);
+	// }
+	// this.authoritySet = listOfAuthorities;
+	//
+	// }
+
 	public void setUsername(String username) {
 		this.username = username;
 	}

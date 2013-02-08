@@ -74,7 +74,7 @@ public class MainController {
 
 		return "redirect:message";
 	}
-
+	
 	@RequestMapping(value = "/addTest", method = RequestMethod.POST)
 	public String addTestUsers(Model model) {
 		List<String> authorities = new ArrayList<String>();
@@ -83,21 +83,14 @@ public class MainController {
 		authorities.add("ROLE_USER1");
 		authorities.add("ROLE_USER2");
 		mainService.addNewUser("admin", "admin", authorities, true);
-		
-		//User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	    //String name = user.getUsername();
-	    
-	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	      String name = auth.getName(); //get logged in username
-	 
-	    
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
+		String name = auth.getName();
+
 		model.addAttribute("userName", name);
-		
+
 		return "redirect:login";
 	}
-	
-	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String registerNewUser(){
-		return "register";
-	}
+
+
 }
