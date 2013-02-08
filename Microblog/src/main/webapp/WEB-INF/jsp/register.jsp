@@ -8,27 +8,33 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+
+<style type="text/css">
+</style>
 </head>
 <body>
-	<form:form  method='POST' action="register" commandName="user">
-	<table>
-				<tr>
-					<td><form:label path="username">Title</form:label></td>
-					<td><form:input path="username" /></td>
-				</tr>
-				<tr>
-					<td><form:label path="password">News</form:label></td>
-					<td><form:input type="passwod" path="password" /></td>
-				</tr>
-				<tr>
-					<td><form:label path="confirmPassword">News</form:label></td>
-					<td><form:input type="passwod" path="confirmPassword" /></td>
-				</tr>
-				<tr>
-					<td colspan="2"><input type="submit" value="Add Message" /></td>
-				</tr>
-			</table>
-			<form:errors path="*"/>
+
+	<h2>Join to us</h2>
+	<form:form method='POST' action="register" commandName="user">
+
+		<div class="clearfix">
+			<form:input path="username" id="inputInfo" placeholder="Username" />
+			<span class="help-inline"><form:errors path="username" /></span>
+		</div>
+
+		<div class="clearfix">
+			<form:input path="password" id="inputInfo" placeholder="Password" />
+			<span class="help-inline"><form:errors path="password" /></span>
+		</div>
+
+		<div class="clearfix">
+			<form:input path="confirmPassword" id="inputInfo"
+				placeholder="Confirm Password" />
+			<span class="help-inline"><form:errors path="confirmPassword" /></span>
+		</div>
+		<input type="submit" class="btn btn-primary" value="Register" />
 	</form:form>
+
+
 </body>
 </html>

@@ -22,7 +22,7 @@ public class RegistrationValidation {
 		String password = user.getPassword();
 		String confirmPassword = user.getConfirmPassword();
 		if (!password.equals(confirmPassword)) {
-			errors.reject("user.confirm");
+			errors.rejectValue("confirmPassword", "user.confirm");
 		}
 		// ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username",
 		// "Size.validationForm.userName",

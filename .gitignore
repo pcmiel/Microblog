@@ -8,7 +8,7 @@
 .project
 *.lck
 *.log
-*.properties
+test.properties
 *.script
 
 # Folders #

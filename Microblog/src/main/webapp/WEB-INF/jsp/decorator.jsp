@@ -12,6 +12,41 @@
 <link href="<c:url value="/resources/css/bootstrap.min.css" />"
 	rel="stylesheet" type="text/css" />
 <sitemesh:write property='head' />
+
+<style type="text/css">
+/* Override some defaults */
+html,body {
+	background-color: #eee;
+}
+
+.container {
+	padding-top: 40px;
+	width: 600px;
+}
+
+/* The white background content wrapper */
+.container>.content {
+	background-color: #fff;
+	padding: 20px;
+	margin: 0 -20px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	-moz-border-radius: 10px 10px 10px 10px;
+	border-radius: 10px 10px 10px 10px;
+	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+}
+
+.login-form {
+	margin-left: 65px;
+}
+
+legend {
+	margin-right: -50px;
+	font-weight: bold;
+	color: #404040;
+}
+</style>
 </head>
 <body>
 	<div class="navbar navbar-inverse navbar-static-top">
@@ -24,21 +59,22 @@
 	</div>
 	<div class="container-fluid">
 
-		<div class="span2">
-			<div class="well sidebar-nav">
-				<c:import url="/WEB-INF/jsp/menu.jsp" />
-			</div>
-			<!--/.well -->
-		</div>
 		<!--/span-->
 
 		<div class='mainBody'>
-			<sitemesh:write property='body' />
+			<div class="container">
+				<div class="content">
+					<div class="row">
+						<div class="login-form">
+							<sitemesh:write property='body' />
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-
-		<div class='disclaimer'>Site disclaimer. This is an example.</div>
-
-		<footer> <c:import url="/WEB-INF/jsp/footer.jsp" /> </footer>
+		<div class="navbar navbar-fixed-bottom">
+			<footer> <c:import url="/WEB-INF/jsp/footer.jsp" /> </footer>
+		</div>
 	</div>
 </body>
 </html>

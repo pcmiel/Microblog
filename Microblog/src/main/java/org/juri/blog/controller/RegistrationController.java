@@ -1,5 +1,7 @@
 package org.juri.blog.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -23,6 +25,9 @@ public class RegistrationController {
 
 	@Autowired
 	private RegistrationValidation registrationValidation;
+	
+	@Resource(name = "mainService")
+	private MainService mainService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView showRegisterForm(ModelMap model) {
@@ -36,6 +41,9 @@ public class RegistrationController {
 		if (result.hasErrors()) {
 			return "register";
 		}
+		List<String> authorities = new ArrayList<String>();
+		authorities.add("ROLE_USER");
+		mainService.addNewUser(user.getUsername(), user.getPassword(), authorities, true);
 		return "login";
 	}
 
