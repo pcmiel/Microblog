@@ -7,10 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
-
-<style type="text/css">
-</style>
+<title>Register</title>
 </head>
 <body>
 
@@ -23,12 +20,13 @@
 		</div>
 
 		<div class="clearfix">
-			<form:input path="password" id="inputInfo" placeholder="Password" />
+			<form:input path="password" type="password" id="inputInfo"
+				placeholder="Password" />
 			<span class="help-inline"><form:errors path="password" /></span>
 		</div>
 
 		<div class="clearfix">
-			<form:input path="confirmPassword" id="inputInfo"
+			<form:input path="confirmPassword" type="password" id="inputInfo"
 				placeholder="Confirm Password" />
 			<span class="help-inline"><form:errors path="confirmPassword" /></span>
 		</div>

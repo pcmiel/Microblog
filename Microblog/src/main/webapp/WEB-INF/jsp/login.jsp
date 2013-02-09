@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -11,54 +12,28 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 </head>
-<body
-	onload='document.f.j_userna<h3>Login with Username and Password (Custom Page)</h3>
- 
-	<c:if test="${not empty error}">
-		<div class="errorblock">
-			Your login attempt was not successful, try again.<br /> Caused : Wrong values
+<body onload='document.f.j_username.focus();'>
+	<h2>Login</h2>
+	<form id="registerHere" method='post'
+		action="<c:url value='j_spring_security_check' />">
+
+		<div class="clearfix">
+			<input type="text" id="inputInfo" name="j_username"
+				placeholder="Username"> <span class="help-inline"> <c:if
+					test="${not empty error}">
+					<div class="errorblock">Your login attempt was not
+						successful, try again.</div>
+				</c:if>
+			</span>
 		</div>
-	</c:if>
- me.focus();'>
 
-	<form class="form-horizontal " id="registerHere" method='post' action="<c:url value='j_spring_security_check' />">
-		<fieldset>
-			<legend>Login</legend>
-			<div class="control-group">
-				<label class="control-label">Name</label>
-				<div class="controls">
-					<input type="text" class="input-xlarge" id="user_name"
-						name="j_username" rel="popover"
-						data-content="Enter your first login."
-						data-original-title="Full Name">
-				</div>
-			</div>
+		<div class="clearfix">
+			<input type="password" id="inputInfo" name="j_password"
+				placeholder="Password">
+		</div>
 
-			<div class="control-group">
-				<label class="control-label">Password</label>
-				<div class="controls">
-					<input type="password" class="input-xlarge" id="user_password"
-						name="j_password" rel="popover"
-						data-content="Enter your password."
-						data-original-title="Password">
-				</div>
-			</div>
+		<input type="submit" class="btn btn-primary" value="Login" />
 
-			<div class="control-group">
-				<label class="control-label"></label>
-				<div class="controls">
-					<button type="submit" class="btn btn-success" name="submit">Login</button>
-				</div>
-			</div>
-			
-		<div class="control-group">
-				<label class="control-label"></label>
-				<div class="controls">
-					<button type="reset" class="btn btn-success" name="reset">Reset</button>
-				</div>
-			</div>
-
-		</fieldset>
 	</form>
 
 	<sec:authorize ifAllGranted="ROLE_USER">

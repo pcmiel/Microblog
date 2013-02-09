@@ -31,21 +31,7 @@ public class MainController {
 	@Resource(name = "mainService")
 	private MainService mainService;
 
-	@RequestMapping(value = "/login")
-	public String login() {
-		return "login";
-	}
-
-	@RequestMapping(value = "/loginfailed", method = RequestMethod.GET)
-	public String loginError(ModelMap model) {
-		model.addAttribute("error", "true");
-		return "login";
-	}
-
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logout(ModelMap model) {
-		return "login";
-	}
+	
 
 	@RequestMapping(value = "/message", method = RequestMethod.GET)
 	public String getMessage(Model model) {

@@ -37,7 +37,8 @@ public class RegistrationController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String processRegister(@Valid @ModelAttribute("user") BlogUser user,
 			BindingResult result) {
-		registrationValidation.validate(user, result);
+		Boolean usernameExist = mainService.checkIfUsernameExist(user.getUsername());
+		registrationValidation.validate(user, result, usernameExist);
 		if (result.hasErrors()) {
 			return "register";
 		}

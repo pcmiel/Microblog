@@ -13,4 +13,6 @@ public interface MainService {
 
 	void addNewUser(String userName, String password, List<String> authorities,
 			Boolean isEnabled);
+	
+	Boolean checkIfUsernameExist(String username);
 }

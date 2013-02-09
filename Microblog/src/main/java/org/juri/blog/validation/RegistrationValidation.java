@@ -13,16 +13,19 @@ public class RegistrationValidation {
 		return BlogUser.class.isAssignableFrom(klass);
 	}
 
-	public void validate(Object target, Errors errors) {
+	public void validate(Object target, Errors errors, Boolean usernameExist) {
 		BlogUser user = (BlogUser) target;
 		// ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username",
 		// "Size.user.username");
 		// ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password",
 		// "degree.required");
+		if(usernameExist){
+			errors.rejectValue("username", "user.username.exist");
+		}
 		String password = user.getPassword();
 		String confirmPassword = user.getConfirmPassword();
 		if (!password.equals(confirmPassword)) {
-			errors.rejectValue("confirmPassword", "user.confirm");
+			errors.rejectValue("confirmPassword", "user.confirmPassword");
 		}
 		// ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username",
 		// "Size.validationForm.userName",

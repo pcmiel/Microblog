@@ -98,4 +98,13 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		return new User(user.getUsername(), user.getPassword(), true, true,
 				true, true, authorities);
 	}
+	
+	public Boolean checkIfUsernameExist(String username)
+	{
+		BlogUser user = userDao.getUserByUserName(username);
+		if(user == null){
+			return false;
+		}
+		return true;
+	}
 }
