@@ -37,46 +37,45 @@ public class UserDaoImpl implements UserDao {
 		BlogUser userResult = null;
 		List<BlogUser> usersList;
 		Session session = sessionFactory.getCurrentSession();
+
 		Query query = session.createQuery("FROM  BlogUser WHERE username= '"
 				+ userName + "'");
 		usersList = (List<BlogUser>) query.list();
 		if (usersList.size() > 0) {
 			userResult = usersList.get(0);
 		}
+		//InsertTestData();
 		return userResult;
 	}
+	
+	public void InsertTestData(){
+		Session session = sessionFactory.getCurrentSession();
+		Set<Authority> authority = new HashSet<Authority>();
+		authority.add(new Authority("test1"));
+		authority.add(new Authority("test2"));
+		for (Authority auth : authority) {
+			session.save(auth);
+		}	
+		
+		List<BlogUser> user = new ArrayList<BlogUser>();
+		user.add(new BlogUser("test1", "test1", authority, true));
+		user.add(new BlogUser("test2", "test2", authority, true));
+		user.add(new BlogUser("test3", "test2", authority, true));
+		user.add(new BlogUser("test4", "test2", authority, true));
+		for (BlogUser blogUser : user) {
+			session.save(blogUser);
+		}
+	}	
 
 	public void addNewUser(BlogUser user) {
 		logger.debug("inside dao addNewUser()");
 
 		Session session = sessionFactory.getCurrentSession();
-
 		
 		//addOrUpdateAuthority(user);
 		session.save(user);
 	}
 
-	private void addOrUpdateAuthority(BlogUser user) {
-		logger.debug("inside dao addOrUpdateAuthority()");
-		
 	
-		//List<String> authorities= new  ArrayList<String>();
-//		authorities.add("ROLE_USER");
-//		authorities.add("ROLE_ADMIN");
-//		authorities.add("ROLE_USER1");
-//		authorities.add("ROLE_ADMIN1");
-//		user.setUserAuthorities(authorities);
-		Set<Authority> authoritySet = new HashSet<Authority>();
-		
-		
-		Authority a = new Authority();
-		a.setAuthority("ROLE_USER");
-		authoritySet.add(a);
-		Authority b = new Authority();
-		b.setAuthority("ROLE_ADMIN");
-		authoritySet.add(b);
-		user.setAuthoritySet(authoritySet);
-		
-	}
 
 }

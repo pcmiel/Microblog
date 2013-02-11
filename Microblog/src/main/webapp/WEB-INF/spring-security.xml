@@ -8,8 +8,8 @@
 	http://www.springframework.org/schema/security/spring-security-3.0.xsd">
  
 	<http auto-config="true">
-		<intercept-url pattern="/message" access="ROLE_USER, ROLE_ADMIN" />
-		<form-login login-page="/login" default-target-url="/message"
+		<intercept-url pattern="/app/*" access="ROLE_USER, ROLE_ADMIN" />
+		<form-login login-page="/login" default-target-url="/app/"
 			authentication-failure-url="/loginfailed" />
 		<logout logout-success-url="/logout" />
 	</http>

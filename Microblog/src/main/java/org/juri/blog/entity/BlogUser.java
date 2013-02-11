@@ -26,13 +26,19 @@ import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.hibernate.validator.constraints.NotEmpty;
 
-
-
-
-
 @Entity
 @Table(name = "USERS")
 public class BlogUser implements UserDetails {
+
+	public BlogUser() {
+	}
+	
+	public BlogUser(String username, String password, Set<Authority> authorities, Boolean isEnabled){
+		this.setUsername(username);
+		this.setPassword(password);
+		this.setAuthoritySet(authorities);
+		this.setEnabled(isEnabled);		
+	}
 
 	private static final long serialVersionUID = 133260785057988071L;
 
@@ -56,9 +62,6 @@ public class BlogUser implements UserDetails {
 	private String password;
 
 	private String confirmPassword;
-	
-
-
 
 	public String getConfirmPassword() {
 		return confirmPassword;

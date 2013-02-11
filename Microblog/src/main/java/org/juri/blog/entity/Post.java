@@ -1,11 +1,14 @@
 package org.juri.blog.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -26,13 +29,19 @@ public class Post implements Serializable{
 	private String news;
 	
 	@Column(name="DATE")
-	private String date;
+	private Date date;
 	
-	@Column(name="AUTHORID")
-	private Integer authorId;
+	@ManyToOne(fetch = FetchType.EAGER) 
+	private BlogUser user; 
 	
 	public Integer getId() {
 		return id;
+	}
+	public BlogUser getUser() {
+		return user;
+	}
+	public void setUser(BlogUser user) {
+		this.user = user;
 	}
 	public void setId(Integer id) {
 		this.id = id;
@@ -49,18 +58,13 @@ public class Post implements Serializable{
 	public void setNews(String news) {
 		this.news = news;
 	}
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
-	public Integer getAuthorId() {
-		return authorId;
-	}
-	public void setAuthorId(Integer authorId) {
-		this.authorId = authorId;
-	}
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

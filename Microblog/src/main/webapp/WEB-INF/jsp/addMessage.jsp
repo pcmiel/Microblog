@@ -14,16 +14,8 @@
 
 			<table>
 				<tr>
-					<td><form:label path="title">Title</form:label></td>
-					<td><form:input path="title" /></td>
-				</tr>
-				<tr>
 					<td><form:label path="news">News</form:label></td>
 					<td><form:input path="news" /></td>
-				</tr>
-				<tr>
-					<td><form:label path="authorId">Author Id</form:label></td>
-					<td><form:input path="authorId" /></td>
 				</tr>
 
 				<tr>

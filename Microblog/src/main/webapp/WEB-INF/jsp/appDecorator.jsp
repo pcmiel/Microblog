@@ -12,7 +12,6 @@
 <link href="<c:url value="/resources/css/bootstrap.min.css" />"
 	rel="stylesheet" type="text/css" />
 <sitemesh:write property='head' />
-
 <style type="text/css">
 /* Override some defaults */
 html,body {
@@ -21,11 +20,16 @@ html,body {
 
 .container {
 	padding-top: 40px;
-	width: 600px;
 }
 
+.container>.margin {
+float:left;
+	width: 20%;
+}
 /* The white background content wrapper */
 .container>.content {
+float:right;
+	width: 75%;
 	background-color: #fff;
 	padding: 20px;
 	margin: 0 -20px;
@@ -53,16 +57,23 @@ legend {
 		<div class="navbar-inner">
 			<div class="container-fluid">
 
-				<c:import url="/WEB-INF/jsp/templates/header.jsp" />
+				<c:import url="/WEB-INF/jsp/templates/appHeader.jsp" />
 			</div>
 		</div>
 	</div>
 	<div class="container-fluid">
 
-		<!--/span-->
 
 		<div class='mainBody'>
 			<div class="container">
+				<div class="margin">
+					<div class=".dropdown-menu">
+						<div class="well sidebar-nav">
+							<c:import url="/WEB-INF/jsp/templates/menu.jsp" />
+						</div>
+					</div>
+				</div>
+
 				<div class="content">
 					<div class="row">
 						<div class="login-form">
@@ -71,9 +82,6 @@ legend {
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="navbar navbar-fixed-bottom">
-			<footer> <c:import url="/WEB-INF/jsp/templates/footer.jsp" /> </footer>
 		</div>
 	</div>
 </body>

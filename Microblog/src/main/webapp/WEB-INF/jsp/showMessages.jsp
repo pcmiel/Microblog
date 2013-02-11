@@ -3,6 +3,8 @@
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,17 +17,15 @@
 
 	<table>
 		<tr>
-			<td width="50">Id</td>
-			<td width="150">Title</td>
-			<td width="150">News</td>
-			<td width="50">AuthorId</td>
+			<td width="150">Author</td>
+			<td width="150">Post</td>
+			<td width="150">Date</td>
 		</tr>
 		<c:forEach items="${post}" var="post">
 			<tr>
-				<td><c:out value="${post.id}" /></td>
-				<td><c:out value="${post.title}" /></td>
+				<td><c:out value="${post.user.username}" /></td>
 				<td><c:out value="${post.news}" /></td>
-				<td><c:out value="${post.authorId}" /></td>
+				<td><fmt:formatDate type="both" value="${post.date}" /></td>
 			</tr>
 		</c:forEach>
 	</table>

@@ -45,7 +45,7 @@ public class RegistrationController {
 		List<String> authorities = new ArrayList<String>();
 		authorities.add("ROLE_USER");
 		mainService.addNewUser(user.getUsername(), user.getPassword(), authorities, true);
-		return "login";
+		return "redirect:login";
 	}
 
 }

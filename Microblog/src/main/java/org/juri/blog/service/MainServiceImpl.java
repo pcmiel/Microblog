@@ -2,11 +2,13 @@ package org.juri.blog.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
@@ -18,8 +20,10 @@ import org.juri.blog.entity.Authority;
 import org.juri.blog.entity.Post;
 import org.juri.blog.entity.BlogUser;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -45,14 +49,14 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		return resultPosts;
 	}
 
-	public void addNewPost(String title, String news, Integer authorId) {
+	public void addNewPost(String news, BlogUser user) {
 		logger.debug("inside service addNewPost()");
 
 		Post post = new Post();
-		post.setTitle(title);
 		post.setNews(news);
-		post.setAuthorId(authorId);
-		post.setDate("11/11/2011");
+		post.setUser(user);
+		Date date = new Date();
+		post.setDate(date);
 
 		postDao.addNewPost(post);
 	}
@@ -98,13 +102,19 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		return new User(user.getUsername(), user.getPassword(), true, true,
 				true, true, authorities);
 	}
-	
-	public Boolean checkIfUsernameExist(String username)
-	{
+
+	public Boolean checkIfUsernameExist(String username) {
 		BlogUser user = userDao.getUserByUserName(username);
-		if(user == null){
+		if (user == null) {
 			return false;
 		}
 		return true;
 	}
+
+	public BlogUser getLoggedInUser() {
+		User user = (User) SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		return userDao.getUserByUserName(user.getUsername());
+	}
+
 }
