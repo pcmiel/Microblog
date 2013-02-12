@@ -14,6 +14,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.juri.blog.entity.Authority;
 import org.juri.blog.entity.BlogUser;
+import org.juri.blog.entity.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
@@ -24,58 +25,56 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository("userDao")
 @Transactional
 public class UserDaoImpl implements UserDao {
-	protected static Logger logger = Logger.getLogger("service");
 
-	// @Autowired
 	@Resource(name = "sessionFactory")
 	private SessionFactory sessionFactory;
 
-	// @Transactional("hibernateTransactionManager")
 	public BlogUser getUserByUserName(String userName) {
-
-		logger.debug("inside dao getUserByUserName()");
 		BlogUser userResult = null;
 		List<BlogUser> usersList;
 		Session session = sessionFactory.getCurrentSession();
-
 		Query query = session.createQuery("FROM  BlogUser WHERE username= '"
 				+ userName + "'");
 		usersList = (List<BlogUser>) query.list();
 		if (usersList.size() > 0) {
 			userResult = usersList.get(0);
 		}
-		//InsertTestData();
 		return userResult;
 	}
-	
-	public void InsertTestData(){
-		Session session = sessionFactory.getCurrentSession();
-		Set<Authority> authority = new HashSet<Authority>();
-		authority.add(new Authority("test1"));
-		authority.add(new Authority("test2"));
-		for (Authority auth : authority) {
-			session.save(auth);
-		}	
-		
-		List<BlogUser> user = new ArrayList<BlogUser>();
-		user.add(new BlogUser("test1", "test1", authority, true));
-		user.add(new BlogUser("test2", "test2", authority, true));
-		user.add(new BlogUser("test3", "test2", authority, true));
-		user.add(new BlogUser("test4", "test2", authority, true));
-		for (BlogUser blogUser : user) {
-			session.save(blogUser);
-		}
-	}	
 
 	public void addNewUser(BlogUser user) {
-		logger.debug("inside dao addNewUser()");
-
 		Session session = sessionFactory.getCurrentSession();
-		
-		//addOrUpdateAuthority(user);
 		session.save(user);
 	}
 
-	
+	public void addNewAuthority(Authority authority) {
+		Session session = sessionFactory.getCurrentSession();
+		session.save(authority);
+	}
 
+	public Authority getAuthority(String authorityName) {
+		Authority authority = null;
+		List<Authority> authorities;
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("FROM  Authority WHERE authority= '"
+				+ authorityName + "'");
+		authorities = (List<Authority>) query.list();
+		if (authorities.size() > 0) {
+			authority = authorities.get(0);
+		}
+		return authority;
+	}
+
+	public List<BlogUser> getAllUsers() {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("FROM  BlogUser");
+		// test();
+		return (List<BlogUser>) query.list();
+	}
+
+	public void addFollowing(BlogUser user, Set<BlogUser> following) {
+		Session session = sessionFactory.getCurrentSession();
+		user.setFollowing(following);
+		session.save(user);
+	}
 }

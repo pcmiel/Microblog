@@ -17,20 +17,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class PostDaoImpl implements PostDao {
 
-	protected static Logger logger = Logger.getLogger("service");
-
 	@Resource(name = "sessionFactory")
 	private SessionFactory sessionFactory;
 	
 	public List<Post> getAllPosts() {
-		logger.debug("inside dao getAllPosts()");
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("FROM  Post");
 		return (List<Post>) query.list();
 	}
 
 	public void addNewPost(Post post) {
-		logger.debug("inside dao addNewPost()");
 		Session session = sessionFactory.getCurrentSession();
 		session.save(post);
 	}

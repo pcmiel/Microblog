@@ -15,15 +15,19 @@ import javax.persistence.Table;
 @Table(name = "POST")
 public class Post implements Serializable{
 	
+	public Post(){	}
+	public Post(String news, Date date, BlogUser user){
+		this.setNews(news);
+		this.setDate(date);
+		this.setUser(user);
+	}
+	
 	private static final long serialVersionUID = -5527566248002296042L;
 	
 	@Id
 	@GeneratedValue
 	@Column(name="ID")
-	private Integer id;
-	
-	@Column(name="TITLE")
-	private String title;
+	private Integer id;	
 	
 	@Column(name="NEWS")
 	private String news;
@@ -45,12 +49,6 @@ public class Post implements Serializable{
 	}
 	public void setId(Integer id) {
 		this.id = id;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
 	}
 	public String getNews() {
 		return news;

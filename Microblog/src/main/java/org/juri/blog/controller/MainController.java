@@ -25,29 +25,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
- @RequestMapping("/app/")
+@RequestMapping("/app/")
 public class MainController {
-
-	// protected static Logger logger = Logger.getLogger("controller");
 
 	@Resource(name = "mainService")
 	private MainService mainService;
 
-	@RequestMapping( method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public String getMessage(Model model) {
-
-		// logger.debug("Received request to show all messages");
-
-		List<Post> post = mainService.getAllPosts();
-		if(post.size() > 0)
-		{
-BlogUser us = post.get(0).getUser();
-System.out.println(us.getUsername());
-		}
-		
-		model.addAttribute("post", post);
-		
-
+		List<Post> posts = mainService.getAllPosts();
+		model.addAttribute("posts", posts);
 		return "showMessages";
 	}
 
@@ -56,16 +43,11 @@ System.out.println(us.getUsername());
 		return new ModelAndView("addMessage", "command", new Post());
 	}
 
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public String addContact(@ModelAttribute("post") Post post,
 			BindingResult result) {
-		BlogUser bu = mainService.getLoggedInUser();
-		mainService.addNewPost(post.getNews(), bu);
+		BlogUser user = mainService.getLoggedInUser();
+		mainService.addNewPost(post.getNews(), user);
 		return "redirect:";
 	}
-
-	
-
-	
-
 }

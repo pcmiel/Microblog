@@ -15,10 +15,6 @@ public class RegistrationValidation {
 
 	public void validate(Object target, Errors errors, Boolean usernameExist) {
 		BlogUser user = (BlogUser) target;
-		// ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username",
-		// "Size.user.username");
-		// ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password",
-		// "degree.required");
 		if(usernameExist){
 			errors.rejectValue("username", "user.username.exist");
 		}
@@ -27,22 +23,5 @@ public class RegistrationValidation {
 		if (!password.equals(confirmPassword)) {
 			errors.rejectValue("confirmPassword", "user.confirmPassword");
 		}
-		// ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username",
-		// "Size.validationForm.userName",
-		// "User Name must not be Empty.");
-		// String username = user.getUsername();
-		// if ((username != null) && ((username.length()) > 50)) {
-		// errors.rejectValue("username",
-		// "name.required",
-		// "User Name must not more than 50 characters.");
-		// }
-		// String password = user.getPassword();
-		// errors.rejectValue("password", "password.required");
-		// if (!(registration.getPassword()).equals(registration
-		// .getConfirmPassword())) {
-		// errors.rejectValue("password",
-		// "matchingPassword.registration.password",
-		// "Password and Confirm Password Not match.");
-		// }
 	}
 }

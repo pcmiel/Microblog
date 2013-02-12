@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -32,19 +33,17 @@ public class BlogUser implements UserDetails {
 
 	public BlogUser() {
 	}
-	
-	public BlogUser(String username, String password, Set<Authority> authorities, Boolean isEnabled){
+
+	public BlogUser(String username, String password,
+			Set<Authority> authorities, Boolean isEnabled) {
 		this.setUsername(username);
 		this.setPassword(password);
 		this.setAuthoritySet(authorities);
-		this.setEnabled(isEnabled);		
+		this.setEnabled(isEnabled);
 	}
 
+	
 	private static final long serialVersionUID = 133260785057988071L;
-
-	// public Set<Authority> getAuthoritySet() {
-	// return authoritySet;
-	// }
 
 	@Id
 	@GeneratedValue
@@ -74,12 +73,10 @@ public class BlogUser implements UserDetails {
 	@Column(name = "ENABLED")
 	private Boolean enabled;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = {CascadeType.ALL})
 	@JoinTable(name = "USER_AUTHORITIES", joinColumns = { @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "AUTHORITY_ID") })
 	private Set<Authority> authoritySet;
-	// private transient Collection<GrantedAuthority> authorities;
 
-	// Spring Security props
 	private transient Collection<GrantedAuthority> authorities;
 
 	@Transient
@@ -125,18 +122,6 @@ public class BlogUser implements UserDetails {
 
 	}
 
-	// @Transient
-	// public void setUserAuthorities(List<String> authorities) {
-	// Set<Authority> listOfAuthorities = new HashSet<Authority>();
-	// for (String role : authorities) {
-	// Authority auth = new Authority();
-	// auth.setAuthority(role);
-	// listOfAuthorities.add(auth);
-	// }
-	// this.authoritySet = listOfAuthorities;
-	//
-	// }
-
 	public void setUsername(String username) {
 		this.username = username;
 	}
@@ -156,4 +141,19 @@ public class BlogUser implements UserDetails {
 	public String getUsername() {
 		return username;
 	}
+	
+	@ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name="FOLLOWING", 
+                joinColumns={@JoinColumn(name="USER_ID")}, 
+                inverseJoinColumns={@JoinColumn(name="FOLLOWING_ID")})
+    private Set<BlogUser> following = new HashSet<BlogUser>();
+	
+	public Set<BlogUser> getFollowing() {
+		return following;
+	}
+
+	public void setFollowing(Set<BlogUser> following) {
+		this.following = following;
+	}
+	
 }

@@ -41,7 +41,7 @@
 		<a href="<c:url value="/j_spring_security_logout"/>">Logout</a>
 		<br />
 	</sec:authorize>
-	<form action="addTest" method='POST'>
+	<form action="addtest" method='POST'>
 		<input name="submit" type="submit" value="Add test user" />
 	</form>
 </body>

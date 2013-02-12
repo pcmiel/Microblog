@@ -44,13 +44,11 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 	private UserDao userDao;
 
 	public List<Post> getAllPosts() {
-		logger.debug("inside service getAllPosts()");
 		List<Post> resultPosts = postDao.getAllPosts();
 		return resultPosts;
 	}
 
 	public void addNewPost(String news, BlogUser user) {
-		logger.debug("inside service addNewPost()");
 
 		Post post = new Post();
 		post.setNews(news);
@@ -63,44 +61,46 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 
 	public void addNewUser(String userName, String password,
 			List<String> authorities, Boolean isEnabled) {
-
-		logger.debug("inside service addNewUser()");
-
-		BlogUser user = new BlogUser();
-		user.setUsername(userName);
-		user.setPassword(password);
-
 		Set<Authority> authoritySet = new HashSet<Authority>();
 		for (String role : authorities) {
-			authoritySet.add(new Authority(role));
+			Authority authority = userDao.getAuthority(role);
+			if (authority == null) {
+				userDao.addNewAuthority(new Authority(role));
+				authority = userDao.getAuthority(role);
+			}
+			if (authority != null) {
+				authoritySet.add(authority);
+			}
 		}
-		Authority a = new Authority();
-		user.setAuthoritySet(authoritySet);
-		// user.setUserAuthorities(authorities);
-		user.setEnabled(isEnabled);
+		BlogUser user = new BlogUser(userName, password, authoritySet,
+				isEnabled);
 		userDao.addNewUser(user);
+	}
+
+	public void addNewAuthority(String authority) {
+		userDao.addNewAuthority(new Authority(authority));
 	}
 
 	public UserDetails loadUserByUsername(String userName)
 			throws UsernameNotFoundException, DataAccessException {
-
-		logger.debug("inside service loadUserByUsername()");
 		BlogUser user = userDao.getUserByUserName(userName);
 		if (user == null) {
 			throw new UsernameNotFoundException("User for username " + userName
 					+ "was not found.");
 		}
 		Collection<Authority> authorityList = user.getAuthoritySet();
-
 		Set<GrantedAuthorityImpl> authorities = new HashSet<GrantedAuthorityImpl>();
-
 		for (Authority auth : authorityList) {
 			if (auth.getAuthority() != null)
 				authorities.add(new GrantedAuthorityImpl(auth.getAuthority()));
 		}
-
 		return new User(user.getUsername(), user.getPassword(), true, true,
 				true, true, authorities);
+	}
+
+	public List<BlogUser> getAllUsers() {
+		List<BlogUser> result = userDao.getAllUsers();
+		return result;
 	}
 
 	public Boolean checkIfUsernameExist(String username) {
@@ -117,4 +117,39 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		return userDao.getUserByUserName(user.getUsername());
 	}
 
+	public void InsertTestDatas() {
+		int userNumber = 4;
+
+		// authorties
+		Set<Authority> authorities = new HashSet<Authority>();
+		authorities.add(new Authority("ROLE_USER"));
+		authorities.add(new Authority("ROLE_ADMIN"));
+
+		// users
+		Set<BlogUser> users = new HashSet<>();
+		for (int i = 0; i < userNumber; i++) {
+			String name = "test" + i;
+			users.add(new BlogUser(name, name, authorities, true));
+		}
+		for (BlogUser blogUser : users) {
+			userDao.addNewUser(blogUser);
+			postDao.addNewPost(new Post(
+					"testtestest " + blogUser.getUsername(), new Date(),
+					blogUser));
+			postDao.addNewPost(new Post("t " + blogUser.getUsername(),
+					new Date(), blogUser));
+			userDao.addFollowing(blogUser, users);
+		}
+	}
+
+	@Override
+	public List<BlogUser> getFollowing(String username) {
+		BlogUser user = userDao.getUserByUserName(username);
+		Set<BlogUser> setUser = user.getFollowing();
+		List<BlogUser> users = new ArrayList<>();
+		for (BlogUser blogUser : setUser) {
+			users.add(blogUser);
+		}
+		return users;
+	}
 }

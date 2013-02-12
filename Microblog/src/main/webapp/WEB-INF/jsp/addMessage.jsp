@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div>
-		<form:form method="post" action="add.html">
+		<form:form method="post" action="">
 
 			<table>
 				<tr>
