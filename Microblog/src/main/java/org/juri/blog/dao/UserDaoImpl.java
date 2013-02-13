@@ -74,7 +74,17 @@ public class UserDaoImpl implements UserDao {
 
 	public void addFollowing(BlogUser user, Set<BlogUser> following) {
 		Session session = sessionFactory.getCurrentSession();
-		user.setFollowing(following);
+		Set<BlogUser> actualFollowing = user.getFollowing();
+		actualFollowing.addAll(following);
+		user.setFollowing(actualFollowing);
+		session.save(user);
+	}
+	
+	public void removeFollowing(BlogUser user, Set<BlogUser> following) {
+		Session session = sessionFactory.getCurrentSession();
+		Set<BlogUser> actualFollowing = user.getFollowing();
+		actualFollowing.removeAll(following);
+		user.setFollowing(actualFollowing);
 		session.save(user);
 	}
 }

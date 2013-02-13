@@ -44,5 +44,9 @@
 	<form action="addtest" method='POST'>
 		<input name="submit" type="submit" value="Add test user" />
 	</form>
+	
+	<form action="removetest" method='POST'>
+		<input name="submit" type="submit" value="Remove test user" />
+	</form>
 </body>
 </html>

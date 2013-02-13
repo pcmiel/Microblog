@@ -13,4 +13,5 @@ public interface UserDao {
 	void addNewAuthority(Authority authority);
 	Authority getAuthority(String authorityName);
 	void addFollowing(BlogUser user, Set<BlogUser> following);
+	void removeFollowing(BlogUser user, Set<BlogUser> following);
 }

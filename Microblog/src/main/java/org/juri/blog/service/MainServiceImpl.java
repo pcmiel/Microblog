@@ -126,7 +126,7 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		authorities.add(new Authority("ROLE_ADMIN"));
 
 		// users
-		Set<BlogUser> users = new HashSet<>();
+		Set<BlogUser> users = new HashSet<BlogUser>();
 		for (int i = 0; i < userNumber; i++) {
 			String name = "test" + i;
 			users.add(new BlogUser(name, name, authorities, true));
@@ -142,14 +142,39 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		}
 	}
 
-	@Override
 	public List<BlogUser> getFollowing(String username) {
 		BlogUser user = userDao.getUserByUserName(username);
 		Set<BlogUser> setUser = user.getFollowing();
-		List<BlogUser> users = new ArrayList<>();
+		List<BlogUser> users = new ArrayList<BlogUser>();
 		for (BlogUser blogUser : setUser) {
 			users.add(blogUser);
 		}
 		return users;
+	}
+	
+	public List<BlogUser> getUnfollowing(String username) {
+		BlogUser user = userDao.getUserByUserName(username);
+		Set<BlogUser> setUser = user.getFollowing();
+		List<BlogUser> unfollowing= getAllUsers();
+		List<BlogUser> listUsers = new ArrayList<BlogUser>();
+		for (BlogUser blogUser : setUser) {
+			listUsers.add(blogUser);
+		}
+		unfollowing.removeAll(listUsers);
+		return unfollowing;
+	}
+
+	public void addFollowing(String username, String followUsername) {
+		Set<BlogUser> follow = new HashSet<BlogUser>();
+		follow.add(userDao.getUserByUserName(followUsername));
+		BlogUser user = userDao.getUserByUserName(username);
+		userDao.addFollowing(user, follow);
+	}
+	
+	public void removeFollowing(String username, String unfollowUsername) {
+		Set<BlogUser> unfollow = new HashSet<BlogUser>();
+		unfollow.add(userDao.getUserByUserName(unfollowUsername));
+		
+		userDao.removeFollowing(userDao.getUserByUserName(username), unfollow);
 	}
 }

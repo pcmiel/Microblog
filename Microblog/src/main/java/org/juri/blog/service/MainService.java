@@ -20,4 +20,7 @@ public interface MainService {
 	void addNewAuthority(String authority);
 	void InsertTestDatas();
 	List<BlogUser> getFollowing(String username);
+	List<BlogUser> getUnfollowing(String username);
+	void addFollowing(String username, String followUsername);
+	void removeFollowing(String username, String unfollowUsername) ;
 }

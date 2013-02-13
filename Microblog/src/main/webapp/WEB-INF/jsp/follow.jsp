@@ -9,18 +9,50 @@
 
 </head>
 <body>
-	<h1>All users</h1>
+	
 
-	<table>
-		<tr>
-			<td width="150">Username</td>
-		</tr>
-		<c:forEach items="${users}" var="user">
-			<tr>
-				<td><c:out value="${user.username}" /></td>
-			</tr>
-		</c:forEach>
-	</table>
-
+	<h1>Currently Following</h1>
+        <table id="following">
+        	<thead>
+        		<tr>
+        			<th colspan="2">Username</th>
+        		</tr>
+        	</thead>
+			<tbody>
+				<c:forEach var="user" items="${following}">
+				<tr>
+					<td><c:out value="${user.username}"/></td>
+					<td>
+				        <form method="GET" action="unfollow">
+				        	<input type="hidden" id="usertest" name="username" value="<c:out value="${user.username}"/>"/>
+				        	<input type="submit" value="Unfollow"/>
+				        </form>
+					</td>
+				</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+		
+		<h1>Not Following</h1>
+        <table id="following">
+        	<thead>
+        		<tr>
+        			<th colspan="2">Username</th>
+        		</tr>
+        	</thead>
+			<tbody>
+				<c:forEach var="user" items="${unfollowing}">
+				<tr>
+					<td><c:out value="${user.username}"/></td>
+					<td>
+				        <form method="GET" action="followNew">
+				        	<input type="hidden" id="usertest" name="username" value="<c:out value="${user.username}"/>"/>
+				        	<input type="submit" value="Follow"/>
+				        </form>
+					</td>
+				</tr>
+				</c:forEach>
+			</tbody>
+		</table>
 </body>
 </html>
