@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "POST")
@@ -30,6 +31,7 @@ public class Post implements Serializable{
 	private Integer id;	
 	
 	@Column(name="NEWS")
+	@Size(min = 3, max = 140, message = "Message length must be between 2 and 140")
 	private String news;
 	
 	@Column(name="DATE")

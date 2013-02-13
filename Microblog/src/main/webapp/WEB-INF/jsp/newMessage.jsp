@@ -10,12 +10,12 @@
 </head>
 <body>
 	<div>
-		<form:form method="post" action="">
+		<form:form method="POST" action="newMessage" commandName="post">
 
 			<table>
 				<tr>
 					<td><form:label path="news">News</form:label></td>
-					<td><form:input path="news" /></td>
+					<td><form:input path="news" /> <form:errors path="news" /></td>
 				</tr>
 
 				<tr>

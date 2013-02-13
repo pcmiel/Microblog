@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.juri.blog.entity.*;
 import org.juri.blog.service.*;
@@ -22,6 +23,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -33,21 +35,21 @@ public class MainController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String getMessage(Model model) {
-		List<Post> posts = mainService.getAllPosts();
+		List<Post> posts = mainService.getFollowingPosts();
 		model.addAttribute("posts", posts);
 		return "showMessages";
+	}	
+
+	@RequestMapping(value = "/myMessages", method = RequestMethod.GET)
+	public String removeMessage(Model model) {
+		List<Post> posts = mainService.getMyPosts();
+		model.addAttribute("posts", posts);
+		return "myMessages";
 	}
 
-	@RequestMapping(value = "/addmessage", method = RequestMethod.GET)
-	public ModelAndView showMessage() {
-		return new ModelAndView("addMessage", "command", new Post());
-	}
-
-	@RequestMapping(method = RequestMethod.POST)
-	public String addContact(@ModelAttribute("post") Post post,
-			BindingResult result) {
-		BlogUser user = mainService.getLoggedInUser();
-		mainService.addNewPost(post.getNews(), user);
+	@RequestMapping(value = "/removeMessage", method = RequestMethod.GET)
+	public String followNewUsers(@RequestParam("messageId") int id) {
+		mainService.removePost(id);
 		return "redirect:";
 	}
 }

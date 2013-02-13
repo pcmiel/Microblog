@@ -48,6 +48,31 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		return resultPosts;
 	}
 
+	public List<Post> getFollowingPosts() {
+		BlogUser user = getLoggedInUser();
+		List<Post> allPosts = getAllPosts();
+		Set<BlogUser> following = user.getFollowing();
+		List<Post> resultPosts = new ArrayList<Post>();
+		for (Post post : allPosts) {
+			if (following.contains(post.getUser())) {
+				resultPosts.add(post);
+			}
+		}
+		return resultPosts;
+	}
+
+	public List<Post> getMyPosts() {
+		BlogUser user = getLoggedInUser();
+		List<Post> allPosts = getAllPosts();
+		List<Post> resultPosts = new ArrayList<Post>();
+		for (Post post : allPosts) {
+			if ((post.getUser().getUsername()).equals(user.getUsername())) {
+				resultPosts.add(post);
+			}
+		}
+		return resultPosts;
+	}
+
 	public void addNewPost(String news, BlogUser user) {
 
 		Post post = new Post();
@@ -57,6 +82,13 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		post.setDate(date);
 
 		postDao.addNewPost(post);
+	}
+
+	public void removePost(int id) {
+		Post post = postDao.getPostById(id);
+		if(post != null){
+			postDao.removePost(post);
+		}
 	}
 
 	public void addNewUser(String userName, String password,
@@ -151,11 +183,11 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		}
 		return users;
 	}
-	
+
 	public List<BlogUser> getUnfollowing(String username) {
 		BlogUser user = userDao.getUserByUserName(username);
 		Set<BlogUser> setUser = user.getFollowing();
-		List<BlogUser> unfollowing= getAllUsers();
+		List<BlogUser> unfollowing = getAllUsers();
 		List<BlogUser> listUsers = new ArrayList<BlogUser>();
 		for (BlogUser blogUser : setUser) {
 			listUsers.add(blogUser);
@@ -170,11 +202,11 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		BlogUser user = userDao.getUserByUserName(username);
 		userDao.addFollowing(user, follow);
 	}
-	
+
 	public void removeFollowing(String username, String unfollowUsername) {
 		Set<BlogUser> unfollow = new HashSet<BlogUser>();
 		unfollow.add(userDao.getUserByUserName(unfollowUsername));
-		
+
 		userDao.removeFollowing(userDao.getUserByUserName(username), unfollow);
 	}
 }

@@ -23,6 +23,13 @@
 				<td><c:out value="${post.user.username}" /></td>
 				<td><c:out value="${post.news}" /></td>
 				<td><fmt:formatDate type="both" value="${post.date}" /></td>
+				<td>
+					<form method="GET" action="removeMessage">
+						<input type="hidden" name="messageId"
+							value="<c:out value="${post.id}"/>" /> <input type="submit"
+							value="Remove" />
+					</form>
+				</td>
 			</tr>
 		</c:forEach>
 	</table>

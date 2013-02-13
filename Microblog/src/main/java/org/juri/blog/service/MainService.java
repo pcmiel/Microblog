@@ -11,7 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 public interface MainService {
 	
 	List<Post> getAllPosts();
+	List<Post> getFollowingPosts();
+	List<Post> getMyPosts();
 	void addNewPost(String news, BlogUser user);
+	void removePost(int id);
 	void addNewUser(String userName, String password, List<String> authorities,
 			Boolean isEnabled);	
 	List<BlogUser> getAllUsers();
