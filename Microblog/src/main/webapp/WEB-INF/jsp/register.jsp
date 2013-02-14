@@ -10,29 +10,33 @@
 <title>Register</title>
 </head>
 <body>
+		<div class="text-info">
+			<h1>Join to us</h1>
+	</div>
+	<div class="pull-left">
+		<form:form method='POST' action="register" commandName="user">
 
-	<h2>Join to us</h2>
-	<form:form method='POST' action="register" commandName="user">
+			<div class="clearfix">
+				<form:input path="username" id="inputInfo" placeholder="Username" />
+				<span class="help-inline"><form:errors class="alert-error"
+						path="username" /></span>
+			</div>
+			<div class="clearfix">
+				<form:input path="password" type="password" id="inputInfo"
+					placeholder="Password" />
+				<span class="help-inline"><form:errors class="alert-error"
+						path="password" /></span>
+			</div>
 
-		<div class="clearfix">
-			<form:input path="username" id="inputInfo" placeholder="Username" />
-			<span class="help-inline"><form:errors path="username" /></span>
-		</div>
-
-		<div class="clearfix">
-			<form:input path="password" type="password" id="inputInfo"
-				placeholder="Password" />
-			<span class="help-inline"><form:errors path="password" /></span>
-		</div>
-
-		<div class="clearfix">
-			<form:input path="confirmPassword" type="password" id="inputInfo"
-				placeholder="Confirm Password" />
-			<span class="help-inline"><form:errors path="confirmPassword" /></span>
-		</div>
-		<input type="submit" class="btn btn-primary" value="Register" />
-	</form:form>
-
+			<div class="clearfix">
+				<form:input path="confirmPassword" type="password" id="inputInfo"
+					placeholder="Confirm Password" />
+				<span class="help-inline"><form:errors class="alert-error"
+						path="confirmPassword" /></span>
+			</div>
+			<input type="submit" class="btn btn-large btn-primary" value="Register" />
+		</form:form>
+	</div>
 
 </body>
 </html>

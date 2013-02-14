@@ -13,16 +13,20 @@
 <title>Insert title here</title>
 </head>
 <body onload='document.f.j_username.focus();'>
-	<h2>Login</h2>
-	<form id="registerHere" method='post'
+	
+		<div class="text-info">
+			<h1>Login</h1>
+		
+	</div>
+	<form  id="registerHere" method='post'
 		action="<c:url value='j_spring_security_check' />">
 
 		<div class="clearfix">
 			<input type="text" id="inputInfo" name="j_username"
 				placeholder="Username"> <span class="help-inline"> <c:if
 					test="${not empty error}">
-					<div class="errorblock">Your login attempt was not
-						successful, try again.</div>
+					<div class="alert-error">Your login attempt was
+						not successful, try again.</div>
 				</c:if>
 			</span>
 		</div>
@@ -32,21 +36,14 @@
 				placeholder="Password">
 		</div>
 
-		<input type="submit" class="btn btn-primary" value="Login" />
+		<input type="submit" class="btn btn-large btn-primary" value="Login" />
 
 	</form>
 
-	<sec:authorize ifAllGranted="ROLE_USER">
-   		Welcome <%=request.getUserPrincipal().getName()%>
-		<a href="<c:url value="/j_spring_security_logout"/>">Logout</a>
-		<br />
-	</sec:authorize>
-	<form action="addtest" method='POST'>
-		<input name="submit" type="submit" value="Add test user" />
-	</form>
-	
-	<form action="removetest" method='POST'>
-		<input name="submit" type="submit" value="Remove test user" />
+
+	<form  action="addtest" method='POST'>
+		<input name="submit" class="btn btn-warning" type="submit"
+			value="Add test data" />
 	</form>
 </body>
 </html>

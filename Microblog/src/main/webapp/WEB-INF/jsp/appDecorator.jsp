@@ -19,17 +19,18 @@ html,body {
 }
 
 .container {
+	width: 700px;
 	padding-top: 40px;
 }
 
 .container>.margin {
-float:left;
-	width: 20%;
+	float: left;
+	width: 30%;
 }
 /* The white background content wrapper */
 .container>.content {
-float:right;
-	width: 75%;
+	float: right;
+	width: 65%;
 	background-color: #fff;
 	padding: 20px;
 	margin: 0 -20px;
@@ -75,10 +76,8 @@ legend {
 				</div>
 
 				<div class="content">
-					<div class="row">
-						<div class="login-form">
-							<sitemesh:write property='body' />
-						</div>
+					<div class="row-fluid">
+						<sitemesh:write property='body' />
 					</div>
 				</div>
 			</div>

@@ -15,6 +15,12 @@
 
 <style type="text/css">
 /* Override some defaults */
+.avatar {
+	width: 48px;
+	height: 48px;
+	border: 5px;
+}
+
 html,body {
 	background-color: #eee;
 }
@@ -73,7 +79,8 @@ legend {
 			</div>
 		</div>
 		<div class="navbar navbar-fixed-bottom">
-			<footer> <c:import url="/WEB-INF/jsp/templates/footer.jsp" /> </footer>
+			<footer> <c:import url="/WEB-INF/jsp/templates/footer.jsp" />
+			</footer>
 		</div>
 	</div>
 </body>

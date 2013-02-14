@@ -10,20 +10,24 @@
 </head>
 <body>
 	<div>
+		<div class="pull-left">
+			<div class="text-info">
+				<h1>Add news</h1>
+			</div>
+		</div>
 		<form:form method="POST" action="newMessage" commandName="post">
 
-			<table>
-				<tr>
-					<td><form:label path="news">News</form:label></td>
-					<td><form:input path="news" /> <form:errors path="news" /></td>
-				</tr>
-
-				<tr>
-					<td colspan="2"><input type="submit" value="Add Message" /></td>
-				</tr>
-			</table>
-
+			<div>
+				<form:textarea path="news" class="span12" rows="4" />
+			</div>			
+			<div class="pull-left">
+				<input type="submit" class="btn btn-large btn-success" value="Add" />
+			</div>
+			<div class="pull-right">
+				<form:errors path="news" class="alert-error" />
+			</div>
 		</form:form>
+		
 	</div>
 </body>
 </html>

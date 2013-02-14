@@ -9,50 +9,67 @@
 
 </head>
 <body>
-	
-
-	<h1>Currently Following</h1>
-        <table id="following">
-        	<thead>
-        		<tr>
-        			<th colspan="2">Username</th>
-        		</tr>
-        	</thead>
+	<div class="text-info">
+		<h1>Follow</h1>
+	</div>
+	<div class="span5 pull-left ">
+		<table class="table table-hover table-condensed" id="following">
+			<thead>
+				<div class="text-success">
+					<h4>Following</h4>
+				</div>
+			</thead>
 			<tbody>
 				<c:forEach var="user" items="${following}">
-				<tr>
-					<td><c:out value="${user.username}"/></td>
-					<td>
-				        <form method="GET" action="unfollow">
-				        	<input type="hidden" id="usertest" name="username" value="<c:out value="${user.username}"/>"/>
-				        	<input type="submit" value="Unfollow"/>
-				        </form>
-					</td>
-				</tr>
+					<tr>
+						<td>
+							<div class="pull-left">
+								<strong><c:out value="${user.username}" /></strong>
+							</div>
+
+							<div class="pull-right">
+								<form method="GET" action="unfollow">
+									<input type="hidden" id="usertest" name="username"
+										value="<c:out value="${user.username}"/>" />
+									<button type="submit" class="btn btn-danger">
+										<i class="icon-remove"></i>
+									</button>
+
+								</form>
+							</div>
+						</td>
+					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
-		
-		<h1>Not Following</h1>
-        <table id="following">
-        	<thead>
-        		<tr>
-        			<th colspan="2">Username</th>
-        		</tr>
-        	</thead>
+	</div>
+	<div class="span5 pull-right">
+		<table class="table table-hover table-condensed" id="following">
+			<thead>
+				<div class="text-success">
+					<h4>Not following</h4>
+				</div>
+			</thead>
 			<tbody>
 				<c:forEach var="user" items="${unfollowing}">
-				<tr>
-					<td><c:out value="${user.username}"/></td>
-					<td>
-				        <form method="GET" action="followNew">
-				        	<input type="hidden" id="usertest" name="username" value="<c:out value="${user.username}"/>"/>
-				        	<input type="submit" value="Follow"/>
-				        </form>
-					</td>
-				</tr>
+					<tr>
+						<td><div class="pull-left">
+								<strong><c:out value="${user.username}" /></strong>
+							</div>
+							<div class="pull-right">
+								<form method="GET" action="followNew">
+									<input type="hidden" id="usertest" name="username"
+										value="<c:out value="${user.username}"/>" />
+									<button type="submit" class="btn btn-info">
+										<i class="icon-ok"></i>
+									</button>
+								</form>
+							</div></td>
+					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
+	</div>
+
 </body>
 </html>
