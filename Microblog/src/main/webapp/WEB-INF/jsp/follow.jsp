@@ -60,7 +60,7 @@
 								<form method="GET" action="followNew">
 									<input type="hidden" id="usertest" name="username"
 										value="<c:out value="${user.username}"/>" />
-									<button type="submit" class="btn btn-info">
+									<button type="submit" class="btn btn-success">
 										<i class="icon-ok"></i>
 									</button>
 								</form>

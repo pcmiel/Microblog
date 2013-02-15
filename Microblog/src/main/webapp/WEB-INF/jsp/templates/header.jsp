@@ -13,8 +13,13 @@
 <!-- Start of the nav bar content -->
 <div class="nav-collapse">
 	<ul class="nav pull-right">
+		<li><a href="#"><sec:authorize ifAllGranted="ROLE_USER">
+					<i class="icon-user icon-white"></i>
+					<strong><%=request.getUserPrincipal().getName()%></strong>
+				</sec:authorize></a></li>
+		</a>
+		<li><a href="login">Login</a></li>
 		<li><a href="register">Sign Up</a></li>
-		<li><a href="login"><sec:authorize ifAllGranted="ROLE_USER">Welcome <%=request.getUserPrincipal().getName()%></sec:authorize></a></li>
 		<li class="divider-vertical"></li>
 		
 	</ul>

@@ -36,7 +36,5 @@ public class LoginController {
 	public String logout(ModelMap model) {
 		SecurityContextHolder.clearContext();
 		return "login";
-	}
-
-	
+	}	
 }

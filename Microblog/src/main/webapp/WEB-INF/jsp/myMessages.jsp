@@ -7,35 +7,69 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Home</title>
+<style type="text/css">
+/* Override some defaults */
+.pre {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
 
+.avatar {
+	width: 48px;
+	height: 48px;
+}
+</style>
 </head>
 <body>
-	<h1>All posts</h1>
+	<div>
+		<div class="pull-left">
+			<div class="text-info">
+				<h1>My posts</h1>
+			</div>
+		</div>
+		<div class="pull-right">
+			<a href="newMessage"><button class="btn btn-primary">Add
+					New</button></a>
+		</div>
+		<table class="table table-hover">
+			<tbody>
+				<c:forEach items="${posts}" var="post">
+					<tr>
+						<td class="span1"><div class="avatar">
+								<img src="/Microblog/resources/img/newpost.png"
+									class="img-rounded">
+							</div></td>
+						<td class="span8">
 
-	<table>
-		<tr>
-			<td width="150">Author</td>
-			<td width="150">Post</td>
-			<td width="150">Date</td>
-		</tr>
-		<c:forEach items="${posts}" var="post">
-			<tr>
-				<td><c:out value="${post.user.username}" /></td>
-				<td><c:out value="${post.news}" /></td>
-				<td><fmt:formatDate type="both" value="${post.date}" /></td>
-				<td>
-					<form method="GET" action="removeMessage">
-						<input type="hidden" name="messageId"
-							value="<c:out value="${post.id}"/>" /> <input type="submit"
-							value="Remove" />
-					</form>
-				</td>
-			</tr>
-		</c:forEach>
-	</table>
-	<a href="newMessage"><button class="btn btn-primary">Add
-			New</button></a>
+							<div class="content">
+								<div class="clearfix">
+									<div class="pull-left text-success">
+										<strong> <c:out value="${post.user.username}" />
+										</strong>
+									</div>
+									<div class="pull-right muted">
+										<fmt:formatDate type="both" value="${post.date}" />
 
+									</div>
+								</div>
 
+								<div class="">
+									<span class=""><pre class="pre"><c:out value="${post.news}" /></pre></span>
+								</div>
+							</div>
+						</td>
+						<td class="span1">
+							<form method="GET" action="removeMessage">
+								<input type="hidden" id="usertest" name="messageId"
+									value="<c:out value="${post.id}"/>" />
+								<button type="submit" class="btn btn-danger">
+									<i class="icon-remove"></i>
+								</button>
+							</form>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
 </body>
 </html>

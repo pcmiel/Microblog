@@ -37,7 +37,7 @@ public class MainController {
 	public String getMessage(Model model) {
 		List<Post> posts = mainService.getFollowingPosts();
 		model.addAttribute("posts", posts);
-		return "showMessages";
+		return "allMessages";
 	}	
 
 	@RequestMapping(value = "/myMessages", method = RequestMethod.GET)
@@ -50,6 +50,6 @@ public class MainController {
 	@RequestMapping(value = "/removeMessage", method = RequestMethod.GET)
 	public String followNewUsers(@RequestParam("messageId") int id) {
 		mainService.removePost(id);
-		return "redirect:";
+		return "redirect:myMessages";
 	}
 }

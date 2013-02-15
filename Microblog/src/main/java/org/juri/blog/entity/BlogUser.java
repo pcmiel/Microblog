@@ -29,7 +29,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "USERS")
-public class BlogUser implements UserDetails {
+public class BlogUser implements UserDetails , Comparable<BlogUser>{
 
 	public BlogUser() {
 	}
@@ -49,6 +49,11 @@ public class BlogUser implements UserDetails {
 	@GeneratedValue
 	@Column(name = "USER_ID")
 	private Long userId;
+
+	public Long getUserId() {
+		return userId;
+	}
+
 
 	@NotEmpty(message = "Login is required!")
 	@Size(min = 3, max = 20, message = "Login length must be between 3 and 40")
@@ -154,6 +159,11 @@ public class BlogUser implements UserDetails {
 
 	public void setFollowing(Set<BlogUser> following) {
 		this.following = following;
+	}
+
+	@Override
+	public int compareTo(BlogUser user) {
+		return this.getUsername().compareTo(user.getUsername());
 	}
 	
 }

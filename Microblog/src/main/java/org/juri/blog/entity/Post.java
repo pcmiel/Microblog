@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "POST")
-public class Post implements Serializable{
+public class Post implements Serializable, Comparable<Post>{
 	
 	public Post(){	}
 	public Post(String news, Date date, BlogUser user){
@@ -67,6 +67,11 @@ public class Post implements Serializable{
 	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	
+	@Override
+	public int compareTo(Post post) {		
+		return post.getDate().compareTo(this.getDate());
 	}
 	
 }

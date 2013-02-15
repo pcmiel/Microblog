@@ -2,6 +2,7 @@ package org.juri.blog.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -45,6 +46,7 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 
 	public List<Post> getAllPosts() {
 		List<Post> resultPosts = postDao.getAllPosts();
+		Collections.sort(resultPosts);
 		return resultPosts;
 	}
 
@@ -107,6 +109,7 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		BlogUser user = new BlogUser(userName, password, authoritySet,
 				isEnabled);
 		userDao.addNewUser(user);
+		addFollowing(user.getUsername(), user.getUsername());
 	}
 
 	public void addNewAuthority(String authority) {
@@ -132,6 +135,7 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 
 	public List<BlogUser> getAllUsers() {
 		List<BlogUser> result = userDao.getAllUsers();
+		Collections.sort(result);
 		return result;
 	}
 
@@ -177,10 +181,12 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 	public List<BlogUser> getFollowing(String username) {
 		BlogUser user = userDao.getUserByUserName(username);
 		Set<BlogUser> setUser = user.getFollowing();
-		List<BlogUser> users = new ArrayList<BlogUser>();
+		List<BlogUser> users = new ArrayList<BlogUser>();		
 		for (BlogUser blogUser : setUser) {
 			users.add(blogUser);
 		}
+		users.remove(user);
+		Collections.sort(users);
 		return users;
 	}
 
@@ -193,6 +199,7 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 			listUsers.add(blogUser);
 		}
 		unfollowing.removeAll(listUsers);
+		Collections.sort(unfollowing);
 		return unfollowing;
 	}
 

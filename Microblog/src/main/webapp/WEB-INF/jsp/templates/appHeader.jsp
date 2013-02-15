@@ -15,10 +15,12 @@
 <!-- Start of the nav bar content -->
 <div class="nav-collapse">
 	<ul class="nav pull-right">
-		
-		<li><a href="#"><sec:authorize
-					access="not hasRole('ROLE_ANONYMOUS')"><%=request.getUserPrincipal().getName()%></sec:authorize>
-				</a><li><a href="../logout">Log out</a></li>
-				<li class="divider-vertical"></li>
+		<li><a href="#"><sec:authorize ifAllGranted="ROLE_USER">
+					<i class="icon-user icon-white"></i>
+					<strong><%=request.getUserPrincipal().getName()%></strong>
+				</sec:authorize></a></li>
+		</a>
+		<li><a href="../logout">Log out</a></li>
+		<li class="divider-vertical"></li>
 	</ul>
 </div>

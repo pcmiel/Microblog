@@ -6,7 +6,7 @@ import org.sitemesh.config.ConfigurableSiteMeshFilter;
 public class Sitemesh extends ConfigurableSiteMeshFilter {
 	@Override
 	protected void applyCustomConfiguration(SiteMeshFilterBuilder builder) {
-		//builder.addDecoratorPath("/app/*", "/WEB-INF/jsp/decorator2.jsp");
+		builder.addDecoratorPath("/app/*", "/WEB-INF/jsp/appDecorator.jsp");
 		builder.addDecoratorPath("/*", "/WEB-INF/jsp/decorator.jsp");
 	}
 }
