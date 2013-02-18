@@ -1,10 +1,10 @@
-package org.juri.blog.dao;
+package org.pcmiel.blog.dao;
 
 import java.util.List;
 import java.util.Set;
 
-import org.juri.blog.entity.Authority;
-import org.juri.blog.entity.BlogUser;
+import org.pcmiel.blog.entity.Authority;
+import org.pcmiel.blog.entity.BlogUser;
 
 public interface UserDao {
 	BlogUser getUserByUserName(String userName);

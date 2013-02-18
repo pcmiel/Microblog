@@ -1,4 +1,4 @@
-package org.juri.blog.controller;
+package org.pcmiel.blog.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,9 +7,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.juri.blog.entity.*;
-import org.juri.blog.service.*;
-import org.juri.blog.dao.*;
+import org.pcmiel.blog.dao.*;
+import org.pcmiel.blog.entity.*;
+import org.pcmiel.blog.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;

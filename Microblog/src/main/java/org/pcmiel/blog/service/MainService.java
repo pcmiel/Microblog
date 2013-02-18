@@ -1,10 +1,10 @@
-package org.juri.blog.service;
+package org.pcmiel.blog.service;
 
 import java.util.List;
 import java.util.Set;
 
-import org.juri.blog.entity.BlogUser;
-import org.juri.blog.entity.Post;
+import org.pcmiel.blog.entity.BlogUser;
+import org.pcmiel.blog.entity.Post;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

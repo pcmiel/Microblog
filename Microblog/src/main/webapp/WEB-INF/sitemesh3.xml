@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- <sitemesh>
+ <sitemesh>
 	<mapping path="/*" decorator="/WEB-INF/jsp/decorator.jsp" />
 	<mapping path="/app/*" decorator="/WEB-INF/jsp/appDecorator.jsp" />
-</sitemesh>-->
+</sitemesh>

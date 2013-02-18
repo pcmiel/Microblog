@@ -1,6 +1,6 @@
-package org.juri.blog.validation;
+package org.pcmiel.blog.validation;
 
-import org.juri.blog.entity.BlogUser;
+import org.pcmiel.blog.entity.BlogUser;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;

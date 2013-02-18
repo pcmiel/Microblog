@@ -1,4 +1,4 @@
-package org.juri.blog.controller;
+package org.pcmiel.blog.controller;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -7,8 +7,8 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
-import org.juri.blog.entity.BlogUser;
-import org.juri.blog.service.MainService;
+import org.pcmiel.blog.entity.BlogUser;
+import org.pcmiel.blog.service.MainService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;

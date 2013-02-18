@@ -1,4 +1,4 @@
-package org.juri.blog.entity;
+package org.pcmiel.blog.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -161,7 +161,6 @@ public class BlogUser implements UserDetails , Comparable<BlogUser>{
 		this.following = following;
 	}
 
-	@Override
 	public int compareTo(BlogUser user) {
 		return this.getUsername().compareTo(user.getUsername());
 	}

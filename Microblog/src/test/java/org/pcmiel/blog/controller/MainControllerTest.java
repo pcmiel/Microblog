@@ -1,10 +1,17 @@
-package org.juri.blog.controller;
+package org.pcmiel.blog.controller;
 
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
 import org.hibernate.SessionFactory;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.pcmiel.blog.controller.MainController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -16,15 +23,22 @@ import org.springframework.ui.Model;
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 public class MainControllerTest {
 
-	@Autowired
-	private SessionFactory sessionFactory;
-
-	@Test
-	public void shouldSessionFactoryBeInjected() throws Exception {
-		// given
-		// when
-		// then
-		//assertNotNull(sessionFactory);
+	private MainController mainController;
+	//private Map<String, Object> model;
+	private Model model;
+	
+	@Before
+	public void setup() {
+		mainController = new MainController();
+		//model = new Model();
+		//model = new HashMap<String, Object>();
 	}
-
+	
+	@Test
+	public void readPageNumberOne() {
+		assertEquals("allMessages", mainController.getMessage(model));
+	}
+	
+	
+	
 }

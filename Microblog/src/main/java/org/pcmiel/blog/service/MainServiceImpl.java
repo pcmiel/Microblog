@@ -1,4 +1,4 @@
-package org.juri.blog.service;
+package org.pcmiel.blog.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,11 +15,11 @@ import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.juri.blog.dao.PostDao;
-import org.juri.blog.dao.UserDao;
-import org.juri.blog.entity.Authority;
-import org.juri.blog.entity.Post;
-import org.juri.blog.entity.BlogUser;
+import org.pcmiel.blog.dao.PostDao;
+import org.pcmiel.blog.dao.UserDao;
+import org.pcmiel.blog.entity.Authority;
+import org.pcmiel.blog.entity.BlogUser;
+import org.pcmiel.blog.entity.Post;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

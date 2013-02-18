@@ -1,4 +1,4 @@
-package org.juri.blog.controller;
+package org.pcmiel.blog.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,9 +7,9 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
-import org.juri.blog.entity.*;
-import org.juri.blog.service.MainService;
-import org.juri.blog.validation.*;
+import org.pcmiel.blog.entity.*;
+import org.pcmiel.blog.service.MainService;
+import org.pcmiel.blog.validation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

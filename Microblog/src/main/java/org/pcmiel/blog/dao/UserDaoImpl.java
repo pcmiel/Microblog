@@ -1,4 +1,4 @@
-package org.juri.blog.dao;
+package org.pcmiel.blog.dao;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,9 +12,9 @@ import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.juri.blog.entity.Authority;
-import org.juri.blog.entity.BlogUser;
-import org.juri.blog.entity.Post;
+import org.pcmiel.blog.entity.Authority;
+import org.pcmiel.blog.entity.BlogUser;
+import org.pcmiel.blog.entity.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;

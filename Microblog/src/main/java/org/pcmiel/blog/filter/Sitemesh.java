@@ -1,4 +1,4 @@
-package org.juri.blog.filter;
+package org.pcmiel.blog.filter;
 
 import org.sitemesh.builder.SiteMeshFilterBuilder;
 import org.sitemesh.config.ConfigurableSiteMeshFilter;

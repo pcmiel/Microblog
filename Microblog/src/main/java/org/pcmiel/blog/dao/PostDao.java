@@ -1,8 +1,8 @@
-package org.juri.blog.dao;
+package org.pcmiel.blog.dao;
 
 import java.util.List;
 
-import org.juri.blog.entity.Post;
+import org.pcmiel.blog.entity.Post;
 
 public interface PostDao {
 	List<Post> getAllPosts();

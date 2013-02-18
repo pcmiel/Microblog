@@ -5,5 +5,5 @@
 			<a href="#">Back to top</a>
 		</p>
 		<p align="center">
-			juri</a>.</div>
+			pcmiel</a>.</div>
 </footer>

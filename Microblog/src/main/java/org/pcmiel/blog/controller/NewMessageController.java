@@ -1,12 +1,12 @@
-package org.juri.blog.controller;
+package org.pcmiel.blog.controller;
 
 
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
-import org.juri.blog.entity.*;
-import org.juri.blog.service.*;
+import org.pcmiel.blog.entity.*;
+import org.pcmiel.blog.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;

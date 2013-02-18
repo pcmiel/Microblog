@@ -1,4 +1,4 @@
-package org.juri.blog.entity;
+package org.pcmiel.blog.entity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -69,7 +69,7 @@ public class Post implements Serializable, Comparable<Post>{
 		return serialVersionUID;
 	}
 	
-	@Override
+	
 	public int compareTo(Post post) {		
 		return post.getDate().compareTo(this.getDate());
 	}
