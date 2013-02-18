@@ -8,7 +8,6 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
-import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -23,7 +22,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository("userDao")
-@Transactional
 public class UserDaoImpl implements UserDao {
 
 	@Resource(name = "sessionFactory")
@@ -33,12 +31,13 @@ public class UserDaoImpl implements UserDao {
 		BlogUser userResult = null;
 		List<BlogUser> usersList;
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("FROM  BlogUser WHERE username= '"
-				+ userName + "'");
+		Query query = session.createQuery("FROM  BlogUser WHERE username= :userName");
+		query.setParameter("userName", userName);
 		usersList = (List<BlogUser>) query.list();
-		if (usersList.size() > 0) {
-			userResult = usersList.get(0);
-		}
+		userResult = (BlogUser) query.uniqueResult();
+//		if (usersList.size() > 0) {
+//			userResult = usersList.get(0);
+//		}
 		return userResult;
 	}
 
@@ -56,12 +55,13 @@ public class UserDaoImpl implements UserDao {
 		Authority authority = null;
 		List<Authority> authorities;
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("FROM  Authority WHERE authority= '"
-				+ authorityName + "'");
+		Query query = session.createQuery("FROM  Authority WHERE authority= :authorityName");
+		query.setParameter("authorityName", authorityName);
 		authorities = (List<Authority>) query.list();
-		if (authorities.size() > 0) {
-			authority = authorities.get(0);
-		}
+		authority = (Authority) query.uniqueResult();
+//		if (authorities.size() > 0) {
+//			authority = authorities.get(0);
+//		}
 		return authority;
 	}
 

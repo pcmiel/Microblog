@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository("postDao")
-@Transactional
 public class PostDaoImpl implements PostDao {
 
 	@Resource(name = "sessionFactory")
@@ -31,11 +29,13 @@ public class PostDaoImpl implements PostDao {
 		Post postResult = null;
 		List<Post> postList;
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("FROM  Post WHERE id= '" + id + "'" );
-		postList = (List<Post>) query.list();
-		if (postList.size() > 0) {
-			postResult = postList.get(0);
-		}
+		Query query = session.createQuery("FROM  Post WHERE id= :id");
+		query.setParameter("id", id);
+		 postResult = (Post) query.uniqueResult();
+//		postList = (List<Post>) query.list();
+//		if (postList.size() > 0) {
+//			postResult = postList.get(0);
+//		}
 		return postResult;
 	}
 

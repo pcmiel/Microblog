@@ -11,7 +11,6 @@ import java.util.Set;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -35,8 +34,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("mainService")
 @Transactional
 public class MainServiceImpl implements MainService, UserDetailsService {
-
-	protected static Logger logger = Logger.getLogger("service");
 
 	@Resource
 	private PostDao postDao;
@@ -141,10 +138,7 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 
 	public Boolean checkIfUsernameExist(String username) {
 		BlogUser user = userDao.getUserByUserName(username);
-		if (user == null) {
-			return false;
-		}
-		return true;
+		return user != null;		
 	}
 
 	public BlogUser getLoggedInUser() {
