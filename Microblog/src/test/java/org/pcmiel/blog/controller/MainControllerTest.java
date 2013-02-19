@@ -12,6 +12,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pcmiel.blog.controller.MainController;
+import org.pcmiel.blog.dao.UserDao;
+import org.pcmiel.blog.entity.Authority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -19,33 +21,26 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.ui.Model;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath*:applicationContext.xml" })
-@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
+@ContextConfiguration(locations = { "/applicationContext.xml", "/spring-security.xml" })
 public class MainControllerTest {
 
-	private MainController mainController;
-	//private Map<String, Object> model;
-	private Model model;
-	
 	@Autowired
 	SessionFactory sessionFactory;
+	
+	//@Autowired
+	//MainService service;
+	
+	UserDao user;
+	
+
+	@Before
+	public void setUp() {
+		user.addNewAuthority(new Authority("test"));
+	}
 	
 	@Test
 	public void shouldSessionFactoryBeInjected() throws Exception {
 	     assertNotNull(sessionFactory);
-	 }
-
-	
-	@Before
-	public void setup() {
-		mainController = new MainController();
-		//model = new Model();
-		//model = new HashMap<String, Object>();
-	}
-	
-	@Test
-	public void readPageNumberOne() {
-		//assertEquals("allMessages", mainController.getMessage(model));
 	}
 	
 	
