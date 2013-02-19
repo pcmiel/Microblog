@@ -7,17 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Home</title>
-<style type="text/css">
-/* Override some defaults */
-.pre {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
 
-.avatar {
-	width: 48px;
-	height: 48px;
-}
-</style>
 </head>
 <body>
 	<div>

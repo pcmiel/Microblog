@@ -13,48 +13,8 @@
 	rel="stylesheet" type="text/css" />
 <sitemesh:write property='head' />
 
-<style type="text/css">
-/* Override some defaults */
-.avatar {
-	width: 48px;
-	height: 48px;
-	border: 5px;
-}
-
-html,body {
-	background-color: #eee;
-}
-
-.container {
-	padding-top: 40px;
-	width: 600px;
-}
-
-/* The white background content wrapper */
-.container>.content {
-	background-color: #fff;
-	padding: 20px;
-	margin: 0 -20px;
-	-webkit-border-radius: 10px 10px 10px 10px;
-	-moz-border-radius: 10px 10px 10px 10px;
-	border-radius: 10px 10px 10px 10px;
-	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
-	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
-	box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
-}
-
-.login-form {
-	margin-left: 65px;
-}
-
-legend {
-	margin-right: -50px;
-	font-weight: bold;
-	color: #404040;
-}
-</style>
 </head>
-<body>
+<body class="decorator">
 	<div class="navbar navbar-inverse navbar-static-top">
 		<div class="navbar-inner">
 			<div class="container-fluid">
@@ -67,7 +27,7 @@ legend {
 
 		<!--/span-->
 
-		<div class='mainBody'>
+		<div class='decoratorBody'>
 			<div class="container">
 				<div class="content">
 					<div class="row">
