@@ -16,6 +16,7 @@ import javax.validation.constraints.Size;
 @Table(name = "POST")
 public class Post implements Serializable, Comparable<Post>{
 	
+	
 	public Post(){	}
 	public Post(String news, Date date, BlogUser user){
 		this.setNews(news);
@@ -73,5 +74,24 @@ public class Post implements Serializable, Comparable<Post>{
 	public int compareTo(Post post) {		
 		return post.getDate().compareTo(this.getDate());
 	}
-	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Post other = (Post) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
 }

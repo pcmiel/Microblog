@@ -19,6 +19,28 @@ public class Authority {
 		this.authority = authority;
 	}
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + authorityId;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Authority other = (Authority) obj;
+		if (authorityId != other.authorityId)
+			return false;
+		return true;
+	}
+
 	@Id
 	@GeneratedValue
 	@Column(name = "AUTHORITY_ID")
