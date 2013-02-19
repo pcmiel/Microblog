@@ -60,6 +60,7 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 				resultPosts.add(post);
 			}
 		}
+		resultPosts.addAll(getMyPosts());
 		return resultPosts;
 	}
 
@@ -98,10 +99,12 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 
 	public BlogUser addNewUser(String userName, String password,
 			List<String> authorities, Boolean isEnabled) {
+		
 		if (checkIfUsernameExist(userName)) {
 			System.err.println(userName + " actual exist");
 			return null;
 		}
+		
 		Set<Authority> authoritySet = new HashSet<Authority>();
 		for (String role : authorities) {
 			Authority authority = userDao.getAuthority(role);
@@ -200,11 +203,16 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 			listUsers.add(blogUser);
 		}
 		unfollowing.removeAll(listUsers);
+		unfollowing.remove(user);
 		Collections.sort(unfollowing);
 		return unfollowing;
 	}
 
 	public Set<BlogUser> addFollowing(String username, String followUsername) {
+		if(username.equals(followUsername)){
+			System.err.println("User can't follow himself");
+			return null;
+		}
 		Set<BlogUser> follow = new HashSet<BlogUser>();
 		follow.add(userDao.getUserByUserName(followUsername));
 		BlogUser user = userDao.getUserByUserName(username);

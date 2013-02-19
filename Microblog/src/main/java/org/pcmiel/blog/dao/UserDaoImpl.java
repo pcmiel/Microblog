@@ -37,10 +37,7 @@ public class UserDaoImpl implements UserDao {
 				.createQuery("FROM  BlogUser WHERE username= :userName");
 		query.setParameter("userName", userName);
 		usersList = (List<BlogUser>) query.list();
-		userResult = (BlogUser) query.uniqueResult();
-		// if (usersList.size() > 0) {
-		// userResult = usersList.get(0);
-		// }
+		userResult = (BlogUser) query.uniqueResult();		
 		return userResult;
 	}
 
