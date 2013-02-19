@@ -1,5 +1,6 @@
 package org.pcmiel.blog.dao;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -20,6 +21,7 @@ import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ReflectionUtils;
 
 @Repository("userDao")
 public class UserDaoImpl implements UserDao {
@@ -31,13 +33,14 @@ public class UserDaoImpl implements UserDao {
 		BlogUser userResult = null;
 		List<BlogUser> usersList;
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("FROM  BlogUser WHERE username= :userName");
+		Query query = session
+				.createQuery("FROM  BlogUser WHERE username= :userName");
 		query.setParameter("userName", userName);
 		usersList = (List<BlogUser>) query.list();
 		userResult = (BlogUser) query.uniqueResult();
-//		if (usersList.size() > 0) {
-//			userResult = usersList.get(0);
-//		}
+		// if (usersList.size() > 0) {
+		// userResult = usersList.get(0);
+		// }
 		return userResult;
 	}
 
@@ -55,13 +58,14 @@ public class UserDaoImpl implements UserDao {
 		Authority authority = null;
 		List<Authority> authorities;
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("FROM  Authority WHERE authority= :authorityName");
+		Query query = session
+				.createQuery("FROM  Authority WHERE authority= :authorityName");
 		query.setParameter("authorityName", authorityName);
 		authorities = (List<Authority>) query.list();
 		authority = (Authority) query.uniqueResult();
-//		if (authorities.size() > 0) {
-//			authority = authorities.get(0);
-//		}
+		// if (authorities.size() > 0) {
+		// authority = authorities.get(0);
+		// }
 		return authority;
 	}
 
@@ -79,7 +83,7 @@ public class UserDaoImpl implements UserDao {
 		user.setFollowing(actualFollowing);
 		session.save(user);
 	}
-	
+
 	public void removeFollowing(BlogUser user, Set<BlogUser> following) {
 		Session session = sessionFactory.getCurrentSession();
 		Set<BlogUser> actualFollowing = user.getFollowing();

@@ -10,7 +10,9 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import javax.validation.ConstraintViolationException;
 
+import org.hibernate.JDBCException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -30,6 +32,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.util.NestedServletException;
 
 @Service("mainService")
 @Transactional
@@ -72,26 +75,33 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		return resultPosts;
 	}
 
-	public void addNewPost(String news, BlogUser user) {
-
+	public Post addNewPost(String news, BlogUser user) {
+		if (user == null) {
+			System.err.println("User not exist");
+			return null;
+		}
 		Post post = new Post();
 		post.setNews(news);
 		post.setUser(user);
 		Date date = new Date();
 		post.setDate(date);
-
 		postDao.addNewPost(post);
+		return post;
 	}
 
 	public void removePost(int id) {
 		Post post = postDao.getPostById(id);
-		if(post != null){
+		if (post != null) {
 			postDao.removePost(post);
 		}
 	}
 
-	public void addNewUser(String userName, String password,
+	public BlogUser addNewUser(String userName, String password,
 			List<String> authorities, Boolean isEnabled) {
+		if (checkIfUsernameExist(userName)) {
+			System.err.println(userName + " actual exist");
+			return null;
+		}
 		Set<Authority> authoritySet = new HashSet<Authority>();
 		for (String role : authorities) {
 			Authority authority = userDao.getAuthority(role);
@@ -105,12 +115,15 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		}
 		BlogUser user = new BlogUser(userName, password, authoritySet,
 				isEnabled);
+
 		userDao.addNewUser(user);
-		addFollowing(user.getUsername(), user.getUsername());
+		return user;
 	}
 
-	public void addNewAuthority(String authority) {
-		userDao.addNewAuthority(new Authority(authority));
+	public Authority addNewAuthority(String authorityName) {
+		Authority authority = new Authority(authorityName);
+		userDao.addNewAuthority(authority);
+		return authority;
 	}
 
 	public UserDetails loadUserByUsername(String userName)
@@ -138,7 +151,7 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 
 	public Boolean checkIfUsernameExist(String username) {
 		BlogUser user = userDao.getUserByUserName(username);
-		return user != null;		
+		return user != null;
 	}
 
 	public BlogUser getLoggedInUser() {
@@ -151,31 +164,25 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		int userNumber = 4;
 
 		// authorties
-		Set<Authority> authorities = new HashSet<Authority>();
-		authorities.add(new Authority("ROLE_USER"));
-		authorities.add(new Authority("ROLE_ADMIN"));
+		List<String> authorities = new ArrayList<String>();
+		authorities.add("ROLE_USER");
+		authorities.add("ROLE_ADMIN");
 
 		// users
 		Set<BlogUser> users = new HashSet<BlogUser>();
 		for (int i = 0; i < userNumber; i++) {
 			String name = "test" + i;
-			users.add(new BlogUser(name, name, authorities, true));
-		}
-		for (BlogUser blogUser : users) {
-			userDao.addNewUser(blogUser);
-			postDao.addNewPost(new Post(
-					"testtestest " + blogUser.getUsername(), new Date(),
-					blogUser));
-			postDao.addNewPost(new Post("t " + blogUser.getUsername(),
-					new Date(), blogUser));
-			userDao.addFollowing(blogUser, users);
+			if(addNewUser(name, name, authorities, true) != null){
+				postDao.addNewPost(new Post("testtestest " + name, new Date(),
+						 userDao.getUserByUserName(name)));
+			}
 		}
 	}
 
 	public List<BlogUser> getFollowing(String username) {
 		BlogUser user = userDao.getUserByUserName(username);
 		Set<BlogUser> setUser = user.getFollowing();
-		List<BlogUser> users = new ArrayList<BlogUser>();		
+		List<BlogUser> users = new ArrayList<BlogUser>();
 		for (BlogUser blogUser : setUser) {
 			users.add(blogUser);
 		}
@@ -197,11 +204,12 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		return unfollowing;
 	}
 
-	public void addFollowing(String username, String followUsername) {
+	public Set<BlogUser> addFollowing(String username, String followUsername) {
 		Set<BlogUser> follow = new HashSet<BlogUser>();
 		follow.add(userDao.getUserByUserName(followUsername));
 		BlogUser user = userDao.getUserByUserName(username);
 		userDao.addFollowing(user, follow);
+		return follow;
 	}
 
 	public void removeFollowing(String username, String unfollowUsername) {

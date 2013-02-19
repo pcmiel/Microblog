@@ -26,29 +26,10 @@ public class TestDataController {
 	public String addTestUsers(Model model) {
 
 		mainService.InsertTestDatas();
-		// List<String> authorities = new ArrayList<String>();
-		// authorities.add("ROLE_USER");
-		// mainService.addNewUser("admin", "admin", authorities, true);
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		String name = auth.getName();
-
 		model.addAttribute("userName", name);
-
-		return "redirect:login";
-	}
-	
-	@RequestMapping(value = "/removetest", method = RequestMethod.POST)
-	public String removeTestUsers(Model model) {
-
-		Set<BlogUser> following = new HashSet<BlogUser>();
-		//mainService.removeFollowing("test1", following);
-		Authentication auth = SecurityContextHolder.getContext()
-				.getAuthentication();
-		String name = auth.getName();
-
-		model.addAttribute("userName", name);
-
 		return "redirect:login";
 	}
 }

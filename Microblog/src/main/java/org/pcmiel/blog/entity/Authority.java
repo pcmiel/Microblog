@@ -22,16 +22,16 @@ public class Authority {
 	@Id
 	@GeneratedValue
 	@Column(name = "AUTHORITY_ID")
-	private Long authorityId;
+	private int authorityId;
 
 	@Column(name = "AUTHORITY")
 	private String authority;
 
-	public Long getAuthorityId() {
+	public int getAuthorityId() {
 		return authorityId;
 	}
 
-	public void setAuthorityId(Long authorityId) {
+	public void setAuthorityId(int authorityId) {
 		this.authorityId = authorityId;
 	}
 

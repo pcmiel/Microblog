@@ -28,7 +28,7 @@ public class Post implements Serializable, Comparable<Post>{
 	@Id
 	@GeneratedValue
 	@Column(name="ID")
-	private Integer id;	
+	private int id;	
 	
 	@Column(name="NEWS")
 	@Size(min = 3, max = 140, message = "Message length must be between 2 and 140")
@@ -40,7 +40,7 @@ public class Post implements Serializable, Comparable<Post>{
 	@ManyToOne(fetch = FetchType.EAGER) 
 	private BlogUser user; 
 	
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
 	public BlogUser getUser() {
@@ -49,7 +49,7 @@ public class Post implements Serializable, Comparable<Post>{
 	public void setUser(BlogUser user) {
 		this.user = user;
 	}
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getNews() {
