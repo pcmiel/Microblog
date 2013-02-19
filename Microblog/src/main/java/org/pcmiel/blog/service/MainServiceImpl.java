@@ -21,7 +21,9 @@ import org.pcmiel.blog.dao.UserDao;
 import org.pcmiel.blog.entity.Authority;
 import org.pcmiel.blog.entity.BlogUser;
 import org.pcmiel.blog.entity.Post;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
@@ -43,6 +45,9 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 
 	@Resource
 	private UserDao userDao;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	public List<Post> getAllPosts() {
 		List<Post> resultPosts = postDao.getAllPosts();
@@ -99,12 +104,11 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 
 	public BlogUser addNewUser(String userName, String password,
 			List<String> authorities, Boolean isEnabled) {
-		
 		if (checkIfUsernameExist(userName)) {
 			System.err.println(userName + " actual exist");
 			return null;
 		}
-		
+		password = passwordEncoder.encodePassword(password, null);
 		Set<Authority> authoritySet = new HashSet<Authority>();
 		for (String role : authorities) {
 			Authority authority = userDao.getAuthority(role);
@@ -175,9 +179,9 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		Set<BlogUser> users = new HashSet<BlogUser>();
 		for (int i = 0; i < userNumber; i++) {
 			String name = "test" + i;
-			if(addNewUser(name, name, authorities, true) != null){
+			if (addNewUser(name, name, authorities, true) != null) {
 				postDao.addNewPost(new Post("testtestest " + name, new Date(),
-						 userDao.getUserByUserName(name)));
+						userDao.getUserByUserName(name)));
 			}
 		}
 	}
@@ -209,7 +213,7 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 	}
 
 	public Set<BlogUser> addFollowing(String username, String followUsername) {
-		if(username.equals(followUsername)){
+		if (username.equals(followUsername)) {
 			System.err.println("User can't follow himself");
 			return null;
 		}
