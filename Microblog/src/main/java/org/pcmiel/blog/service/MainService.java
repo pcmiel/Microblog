@@ -6,8 +6,6 @@ import java.util.Set;
 import org.pcmiel.blog.entity.Authority;
 import org.pcmiel.blog.entity.BlogUser;
 import org.pcmiel.blog.entity.Post;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 public interface MainService {
 

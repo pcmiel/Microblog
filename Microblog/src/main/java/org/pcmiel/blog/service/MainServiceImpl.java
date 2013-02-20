@@ -9,13 +9,9 @@ import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
-import javax.validation.ConstraintViolationException;
 
-import org.hibernate.JDBCException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.pcmiel.blog.dao.AuthorityDao;
+import org.pcmiel.blog.dao.FollowDao;
 import org.pcmiel.blog.dao.PostDao;
 import org.pcmiel.blog.dao.UserDao;
 import org.pcmiel.blog.entity.Authority;
@@ -24,8 +20,6 @@ import org.pcmiel.blog.entity.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -34,7 +28,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.util.NestedServletException;
 
 @Service("mainService")
 @Transactional
@@ -45,7 +38,13 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 
 	@Resource
 	private UserDao userDao;
-	
+
+	@Resource
+	private AuthorityDao authorityDao;
+
+	@Resource
+	private FollowDao followDao;
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
@@ -111,10 +110,10 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		password = passwordEncoder.encodePassword(password, null);
 		Set<Authority> authoritySet = new HashSet<Authority>();
 		for (String role : authorities) {
-			Authority authority = userDao.getAuthority(role);
+			Authority authority = authorityDao.getAuthority(role);
 			if (authority == null) {
-				userDao.addNewAuthority(new Authority(role));
-				authority = userDao.getAuthority(role);
+				authorityDao.addNewAuthority(new Authority(role));
+				authority = authorityDao.getAuthority(role);
 			}
 			if (authority != null) {
 				authoritySet.add(authority);
@@ -129,7 +128,7 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 
 	public Authority addNewAuthority(String authorityName) {
 		Authority authority = new Authority(authorityName);
-		userDao.addNewAuthority(authority);
+		authorityDao.addNewAuthority(authority);
 		return authority;
 	}
 
@@ -220,7 +219,7 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		Set<BlogUser> follow = new HashSet<BlogUser>();
 		follow.add(userDao.getUserByUserName(followUsername));
 		BlogUser user = userDao.getUserByUserName(username);
-		userDao.addFollowing(user, follow);
+		followDao.addFollowing(user, follow);
 		return follow;
 	}
 
@@ -228,6 +227,6 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		Set<BlogUser> unfollow = new HashSet<BlogUser>();
 		unfollow.add(userDao.getUserByUserName(unfollowUsername));
 
-		userDao.removeFollowing(userDao.getUserByUserName(username), unfollow);
+		followDao.removeFollowing(userDao.getUserByUserName(username), unfollow);
 	}
 }
