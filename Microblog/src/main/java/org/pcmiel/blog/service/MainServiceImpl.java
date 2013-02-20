@@ -50,34 +50,26 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 
 	public List<Post> getAllPosts() {
 		List<Post> resultPosts = postDao.getAllPosts();
-		Collections.sort(resultPosts);
+		// Collections.sort(resultPosts);
 		return resultPosts;
 	}
 
 	public List<Post> getFollowingPosts() {
 		BlogUser user = getLoggedInUser();
-		List<Post> allPosts = getAllPosts();
-		Set<BlogUser> following = user.getFollowing();
-		List<Post> resultPosts = new ArrayList<Post>();
-		for (Post post : allPosts) {
-			if (following.contains(post.getUser())) {
-				resultPosts.add(post);
-			}
+		List followingUsersID = followDao.getFollowingUsersId(user);
+		List<Post> followingPosts = postDao.getPostsByUsersId(followingUsersID);
+		if (followingPosts == null) {
+			followingPosts = getMyPosts();
+		} else {
+			followingPosts.addAll(getMyPosts());
 		}
-		resultPosts.addAll(getMyPosts());
-		return resultPosts;
+		Collections.sort(followingPosts);
+		return followingPosts;
 	}
 
 	public List<Post> getMyPosts() {
 		BlogUser user = getLoggedInUser();
-		List<Post> allPosts = getAllPosts();
-		List<Post> resultPosts = new ArrayList<Post>();
-		for (Post post : allPosts) {
-			if ((post.getUser().getUsername()).equals(user.getUsername())) {
-				resultPosts.add(post);
-			}
-		}
-		return resultPosts;
+		return postDao.getUserPosts(user);
 	}
 
 	public Post addNewPost(String news, BlogUser user) {
@@ -85,11 +77,8 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 			System.err.println("User not exist");
 			return null;
 		}
-		Post post = new Post();
-		post.setNews(news);
-		post.setUser(user);
 		Date date = new Date();
-		post.setDate(date);
+		Post post = new Post(news, date, user);
 		postDao.addNewPost(post);
 		return post;
 	}
@@ -103,6 +92,7 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 
 	public BlogUser addNewUser(String userName, String password,
 			List<String> authorities, Boolean isEnabled) {
+
 		if (checkIfUsernameExist(userName)) {
 			System.err.println(userName + " actual exist");
 			return null;
@@ -112,8 +102,7 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		for (String role : authorities) {
 			Authority authority = authorityDao.getAuthority(role);
 			if (authority == null) {
-				authorityDao.addNewAuthority(new Authority(role));
-				authority = authorityDao.getAuthority(role);
+				authority = addNewAuthority(role);
 			}
 			if (authority != null) {
 				authoritySet.add(authority);
@@ -172,7 +161,6 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		// authorties
 		List<String> authorities = new ArrayList<String>();
 		authorities.add("ROLE_USER");
-		authorities.add("ROLE_ADMIN");
 
 		// users
 		Set<BlogUser> users = new HashSet<BlogUser>();
@@ -187,28 +175,27 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 
 	public List<BlogUser> getFollowing(String username) {
 		BlogUser user = userDao.getUserByUserName(username);
-		Set<BlogUser> setUser = user.getFollowing();
-		List<BlogUser> users = new ArrayList<BlogUser>();
-		for (BlogUser blogUser : setUser) {
-			users.add(blogUser);
+		List followingUsersId = followDao.getFollowingUsersId(user);
+		List<BlogUser> followingUsers = userDao.getUsersById(followingUsersId);
+		if (followingUsers == null || followingUsers.size() == 0) {
+			return null;
 		}
-		users.remove(user);
-		Collections.sort(users);
-		return users;
+		followingUsers.remove(user);
+		Collections.sort(followingUsers);
+		return followingUsers;
 	}
 
 	public List<BlogUser> getUnfollowing(String username) {
 		BlogUser user = userDao.getUserByUserName(username);
-		Set<BlogUser> setUser = user.getFollowing();
-		List<BlogUser> unfollowing = getAllUsers();
-		List<BlogUser> listUsers = new ArrayList<BlogUser>();
-		for (BlogUser blogUser : setUser) {
-			listUsers.add(blogUser);
+		List followingUsersId = followDao.getFollowingUsersId(user);
+		List<BlogUser> unfollowingUsers = userDao
+				.getUsersWhoseNotIn(followingUsersId);
+		if (unfollowingUsers == null || unfollowingUsers.size() == 0) {
+			return null;
 		}
-		unfollowing.removeAll(listUsers);
-		unfollowing.remove(user);
-		Collections.sort(unfollowing);
-		return unfollowing;
+		unfollowingUsers.remove(user);
+		Collections.sort(unfollowingUsers);
+		return unfollowingUsers;
 	}
 
 	public Set<BlogUser> addFollowing(String username, String followUsername) {
@@ -226,7 +213,7 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 	public void removeFollowing(String username, String unfollowUsername) {
 		Set<BlogUser> unfollow = new HashSet<BlogUser>();
 		unfollow.add(userDao.getUserByUserName(unfollowUsername));
-
-		followDao.removeFollowing(userDao.getUserByUserName(username), unfollow);
+		followDao
+				.removeFollowing(userDao.getUserByUserName(username), unfollow);
 	}
 }

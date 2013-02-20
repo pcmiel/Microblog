@@ -1,5 +1,4 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="sec"
@@ -18,15 +17,11 @@
 	<div class="navbar navbar-inverse navbar-static-top">
 		<div class="navbar-inner">
 			<div class="container-fluid">
-
 				<c:import url="/WEB-INF/jsp/templates/header.jsp" />
 			</div>
 		</div>
 	</div>
 	<div class="container-fluid">
-
-		<!--/span-->
-
 		<div class='decoratorBody'>
 			<div class="container">
 				<div class="content">
@@ -39,7 +34,8 @@
 			</div>
 		</div>
 		<div class="navbar navbar-fixed-bottom">
-			<footer> <c:import url="/WEB-INF/jsp/templates/footer.jsp" />
+			<footer> 
+				<c:import url="/WEB-INF/jsp/templates/footer.jsp" />
 			</footer>
 		</div>
 	</div>

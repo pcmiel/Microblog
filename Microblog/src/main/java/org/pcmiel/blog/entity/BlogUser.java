@@ -1,28 +1,22 @@
 package org.pcmiel.blog.entity;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Transient;
-import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Size;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -44,7 +38,6 @@ public class BlogUser implements UserDetails , Comparable<BlogUser>{
 		this.setAuthoritySet(authorities);
 		this.setEnabled(isEnabled);
 	}
-
 	
 	private static final long serialVersionUID = 133260785057988071L;
 
@@ -56,7 +49,6 @@ public class BlogUser implements UserDetails , Comparable<BlogUser>{
 	public int getUserId() {
 		return userId;
 	}
-
 
 	@NotEmpty(message = "Login is required!")
 	@Size(min = 3, max = 20, message = "Login length must be between 3 and 40")
@@ -188,6 +180,5 @@ public class BlogUser implements UserDetails , Comparable<BlogUser>{
 
 	public int compareTo(BlogUser user) {
 		return this.getUsername().compareTo(user.getUsername());
-	}
-	
+	}	
 }

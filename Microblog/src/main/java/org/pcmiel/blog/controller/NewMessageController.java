@@ -1,7 +1,5 @@
 package org.pcmiel.blog.controller;
 
-
-
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
@@ -21,14 +19,13 @@ public class NewMessageController {
 	@Resource(name = "mainService")
 	private MainService mainService;
 
-
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView showMessage() {
+	public ModelAndView newMessage() {
 		return new ModelAndView("newMessage", "post", new Post());
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String addContact(@Valid @ModelAttribute("post") Post post,
+	public String addNewMessage(@Valid @ModelAttribute("post") Post post,
 			BindingResult result) {
 		if (result.hasErrors()) {
 			return "newMessage";

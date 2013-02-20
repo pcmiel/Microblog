@@ -15,9 +15,7 @@
 	<div class="text-info">
 		<h1>Login</h1>
 	</div>
-	<form id="registerHere" method='post'
-		action="<c:url value='j_spring_security_check' />">
-
+	<form id="loginHere" method='POST' action="<c:url value='j_spring_security_check' />">
 		<div class="clearfix">
 			<input type="text" id="inputInfo" name="j_username"
 				placeholder="Username"> <span class="help-inline"> <c:if

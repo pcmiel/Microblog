@@ -38,17 +38,15 @@
 									</div>
 									<div class="pull-right muted">
 										<fmt:formatDate type="both" value="${post.date}" />
-
 									</div>
 								</div>
-
 								<div class="">
 									<span class=""><pre class="pre"><c:out value="${post.news}" /></pre></span>
 								</div>
 							</div>
 						</td>
 						<td class="span1">
-							<form method="GET" action="removeMessage">
+							<form method="POST" action="removeMessage">
 								<input type="hidden" id="usertest" name="messageId"
 									value="<c:out value="${post.id}"/>" />
 								<button type="submit" class="btn btn-danger">

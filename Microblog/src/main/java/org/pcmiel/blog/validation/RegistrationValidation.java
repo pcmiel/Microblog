@@ -3,8 +3,6 @@ package org.pcmiel.blog.validation;
 import org.pcmiel.blog.entity.BlogUser;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
-import org.springframework.validation.Validator;
 
 @Component("registrationValidator")
 public class RegistrationValidation {

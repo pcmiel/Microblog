@@ -15,7 +15,6 @@
 	</div>
 	<div class="pull-left">
 		<form:form method='POST' action="register" commandName="user">
-
 			<div class="clearfix">
 				<form:input path="username" id="inputInfo" placeholder="Username" />
 				<span class="help-inline"><form:errors class="alert-error"
@@ -27,7 +26,6 @@
 				<span class="help-inline"><form:errors class="alert-error"
 						path="password" /></span>
 			</div>
-
 			<div class="clearfix">
 				<form:input path="confirmPassword" type="password" id="inputInfo"
 					placeholder="Confirm Password" />
@@ -37,6 +35,5 @@
 			<input type="submit" class="btn btn-large btn-primary" value="Register" />
 		</form:form>
 	</div>
-
 </body>
 </html>

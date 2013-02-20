@@ -16,8 +16,7 @@
 			</div>
 		</div>
 		<div class="pull-right">
-			<a href="newMessage"><button class="btn btn-primary">Add
-					New</button></a>
+			<a href="newMessage"><button class="btn btn-primary">Add New</button></a>
 		</div>
 		<table class="table table-hover">
 			<tbody>

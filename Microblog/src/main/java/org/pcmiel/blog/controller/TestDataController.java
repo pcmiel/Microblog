@@ -1,13 +1,7 @@
 package org.pcmiel.blog.controller;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import javax.annotation.Resource;
 
-import org.pcmiel.blog.entity.BlogUser;
 import org.pcmiel.blog.service.MainService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,8 +17,7 @@ public class TestDataController {
 	private MainService mainService;
 
 	@RequestMapping(value = "/addtest", method = RequestMethod.POST)
-	public String addTestUsers(Model model) {
-
+	public String insertTestData(Model model) {
 		mainService.InsertTestDatas();
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();

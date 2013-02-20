@@ -68,12 +68,12 @@ public class Post implements Serializable, Comparable<Post>{
 	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-	
+	}	
 	
 	public int compareTo(Post post) {		
 		return post.getDate().compareTo(this.getDate());
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -81,6 +81,7 @@ public class Post implements Serializable, Comparable<Post>{
 		result = prime * result + id;
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

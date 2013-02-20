@@ -2,7 +2,6 @@ package org.pcmiel.blog.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -30,7 +29,7 @@ public class RegistrationController {
 	private MainService mainService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView showRegisterForm(ModelMap model) {
+	public ModelAndView showRegistrationForm(ModelMap model) {
          return new ModelAndView("register", "user", new BlogUser());
 	}
 
@@ -47,5 +46,4 @@ public class RegistrationController {
 		mainService.addNewUser(user.getUsername(), user.getPassword(), authorities, true);
 		return "redirect:login";
 	}
-
 }
