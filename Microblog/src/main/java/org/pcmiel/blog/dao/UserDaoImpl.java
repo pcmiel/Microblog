@@ -51,7 +51,7 @@ public class UserDaoImpl implements UserDao {
 		return usersList;
 	}
 	
-	public List<BlogUser> getUsersWhoseNotIn(List usersId) {
+	public List<BlogUser> getUsersWhoseNotInList(List usersId) {
 		if(usersId==null || usersId.size()< 1){
 			return getAllUsers();
 		}

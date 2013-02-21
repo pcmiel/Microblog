@@ -189,7 +189,7 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		BlogUser user = userDao.getUserByUserName(username);
 		List followingUsersId = followDao.getFollowingUsersId(user);
 		List<BlogUser> unfollowingUsers = userDao
-				.getUsersWhoseNotIn(followingUsersId);
+				.getUsersWhoseNotInList(followingUsersId);
 		if (unfollowingUsers == null || unfollowingUsers.size() == 0) {
 			return null;
 		}

@@ -8,5 +8,5 @@ public interface UserDao {
 	void addNewUser(BlogUser user);
 	List<BlogUser> getAllUsers();	
 	List<BlogUser> getUsersById(List usersId);	
-	List<BlogUser> getUsersWhoseNotIn(List usersId);
+	List<BlogUser> getUsersWhoseNotInList(List usersId);
 }
