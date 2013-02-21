@@ -1,5 +1,6 @@
 package org.pcmiel.blog.service;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -17,6 +18,8 @@ import org.pcmiel.blog.dao.UserDao;
 import org.pcmiel.blog.entity.Authority;
 import org.pcmiel.blog.entity.BlogUser;
 import org.pcmiel.blog.entity.Post;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
@@ -32,7 +35,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("mainService")
 @Transactional
 public class MainServiceImpl implements MainService, UserDetailsService {
-
+	private static final Logger logger = LoggerFactory.getLogger(MainServiceImpl.class);
+	
 	@Resource
 	private PostDao postDao;
 
@@ -72,37 +76,37 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		return postDao.getUserPosts(user);
 	}
 
-	public Post addNewPost(String news, BlogUser user) {
+	public void addNewPost(String news, BlogUser user) {
 		if (user == null) {
-			System.err.println("User not exist");
-			return null;
+			logger.warn("User not exist");
+			return;
 		}
 		Date date = new Date();
 		Post post = new Post(news, date, user);
 		postDao.addNewPost(post);
-		return post;
 	}
 
-	public void removePost(int id) {
+	public void removePost(Integer id) {
 		Post post = postDao.getPostById(id);
 		if (post != null) {
 			postDao.removePost(post);
 		}
 	}
 
-	public BlogUser addNewUser(String userName, String password,
+	public void addNewUser(String userName, String password,
 			List<String> authorities, Boolean isEnabled) {
 
-		if (checkIfUsernameExist(userName)) {
-			System.err.println(userName + " actual exist");
-			return null;
+		if (checkThatUserExist(userName)) {
+			logger.warn(userName + " actual exist");
+			return;
 		}
 		password = passwordEncoder.encodePassword(password, null);
 		Set<Authority> authoritySet = new HashSet<Authority>();
 		for (String role : authorities) {
 			Authority authority = authorityDao.getAuthority(role);
 			if (authority == null) {
-				authority = addNewAuthority(role);
+				addNewAuthority(role);
+				authority = authorityDao.getAuthority(role);
 			}
 			if (authority != null) {
 				authoritySet.add(authority);
@@ -110,15 +114,12 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		}
 		BlogUser user = new BlogUser(userName, password, authoritySet,
 				isEnabled);
-
 		userDao.addNewUser(user);
-		return user;
 	}
 
-	public Authority addNewAuthority(String authorityName) {
+	public void addNewAuthority(String authorityName) {
 		Authority authority = new Authority(authorityName);
 		authorityDao.addNewAuthority(authority);
-		return authority;
 	}
 
 	public UserDetails loadUserByUsername(String userName)
@@ -144,7 +145,7 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		return result;
 	}
 
-	public Boolean checkIfUsernameExist(String username) {
+	public Boolean checkThatUserExist(String username) {
 		BlogUser user = userDao.getUserByUserName(username);
 		return user != null;
 	}
@@ -166,10 +167,9 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		Set<BlogUser> users = new HashSet<BlogUser>();
 		for (int i = 0; i < userNumber; i++) {
 			String name = "test" + i;
-			if (addNewUser(name, name, authorities, true) != null) {
-				postDao.addNewPost(new Post("testtestest " + name, new Date(),
-						userDao.getUserByUserName(name)));
-			}
+			addNewUser(name, name, authorities, true);
+			postDao.addNewPost(new Post("testtestest " + name, new Date(),
+					userDao.getUserByUserName(name)));
 		}
 	}
 
@@ -198,16 +198,15 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		return unfollowingUsers;
 	}
 
-	public Set<BlogUser> addFollowing(String username, String followUsername) {
+	public void addFollowing(String username, String followUsername) {
 		if (username.equals(followUsername)) {
-			System.err.println("User can't follow himself");
-			return null;
+			logger.warn("User can't follow himself");
+			return;
 		}
 		Set<BlogUser> follow = new HashSet<BlogUser>();
 		follow.add(userDao.getUserByUserName(followUsername));
 		BlogUser user = userDao.getUserByUserName(username);
 		followDao.addFollowing(user, follow);
-		return follow;
 	}
 
 	public void removeFollowing(String username, String unfollowUsername) {

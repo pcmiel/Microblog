@@ -1,5 +1,6 @@
 package org.pcmiel.blog.entity;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -44,9 +45,9 @@ public class BlogUser implements UserDetails , Comparable<BlogUser>{
 	@Id
 	@GeneratedValue
 	@Column(name = "USER_ID")	
-	private int userId;
+	private Integer userId;
 
-	public int getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
 
@@ -156,7 +157,10 @@ public class BlogUser implements UserDetails , Comparable<BlogUser>{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + userId;
+		if (userId == null) {
+			return -1;
+		}
+		result =  (prime * result + userId);
 		return result;
 	}
 

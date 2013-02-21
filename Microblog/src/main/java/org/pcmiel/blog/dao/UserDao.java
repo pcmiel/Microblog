@@ -1,5 +1,6 @@
 package org.pcmiel.blog.dao;
 
+import java.math.BigInteger;
 import java.util.List;
 import org.pcmiel.blog.entity.BlogUser;
 

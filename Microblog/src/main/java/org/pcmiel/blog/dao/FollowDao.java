@@ -1,6 +1,7 @@
 package org.pcmiel.blog.dao;
 
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Set;
 

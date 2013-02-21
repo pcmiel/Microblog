@@ -12,17 +12,17 @@ public interface MainService {
 	List<Post> getAllPosts();
 	List<Post> getFollowingPosts();
 	List<Post> getMyPosts();
-	Post addNewPost(String news, BlogUser user);
-	void removePost(int id);
-	BlogUser addNewUser(String userName, String password, List<String> authorities,
+	void addNewPost(String news, BlogUser user);
+	void removePost(Integer id);
+	void addNewUser(String userName, String password, List<String> authorities,
 			Boolean isEnabled);	
 	List<BlogUser> getAllUsers();
-	Boolean checkIfUsernameExist(String username);
+	Boolean checkThatUserExist(String username);
 	BlogUser getLoggedInUser();
-	Authority addNewAuthority(String authority);
+	void addNewAuthority(String authority);
 	void InsertTestDatas();
 	List<BlogUser> getFollowing(String username);
 	List<BlogUser> getUnfollowing(String username);
-	Set<BlogUser> addFollowing(String username, String followUsername);
+	void addFollowing(String username, String followUsername);
 	void removeFollowing(String username, String unfollowUsername) ;
 }

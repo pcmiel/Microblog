@@ -1,5 +1,6 @@
 package org.pcmiel.blog.dao;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class PostDaoImpl implements PostDao {
 		return postList;
 	}
 
-	public Post getPostById(int id) {
+	public Post getPostById(Integer id) {
 		Post postResult = null;
 		postResult = (Post) getCurrentSession().get(Post.class, id);
 		return postResult;

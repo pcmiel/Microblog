@@ -66,7 +66,7 @@ public class UserDaoTest {
 	public void TestGetUsersById() throws Exception{
 		BlogUser user = userDao.getUserByUserName("name1");
 		BlogUser user2 = userDao.getUserByUserName("name2");
-		List<Integer> Ids = new ArrayList<Integer>();
+		List Ids = new ArrayList<Long>();
 		Ids.add(user.getUserId());
 		Ids.add(user2.getUserId());
 		List<BlogUser> usersList = userDao.getUsersById(Ids);		
@@ -79,7 +79,7 @@ public class UserDaoTest {
 	@Test
 	public void TestGetUsersWhoseNotInList() throws Exception{
 		BlogUser user = userDao.getUserByUserName("name1");
-		List<Integer> Ids = new ArrayList<Integer>();
+		List Ids = new ArrayList<Long>();
 		Ids.add(user.getUserId());
 		List<BlogUser> usersList = userDao.getUsersWhoseNotInList(Ids);		
 		assertNotNull(usersList);
