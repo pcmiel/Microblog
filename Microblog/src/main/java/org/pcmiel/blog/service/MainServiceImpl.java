@@ -178,7 +178,7 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		List followingUsersId = followDao.getFollowingUsersId(user);
 		List<BlogUser> followingUsers = userDao.getUsersById(followingUsersId);
 		if (followingUsers == null || followingUsers.size() == 0) {
-			return null;
+			return new ArrayList<BlogUser>();
 		}
 		followingUsers.remove(user);
 		Collections.sort(followingUsers);
@@ -191,7 +191,7 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		List<BlogUser> unfollowingUsers = userDao
 				.getUsersWhoseNotInList(followingUsersId);
 		if (unfollowingUsers == null || unfollowingUsers.size() == 0) {
-			return null;
+			return new ArrayList<BlogUser>();
 		}
 		unfollowingUsers.remove(user);
 		Collections.sort(unfollowingUsers);
