@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import static org.fest.assertions.api.Assertions.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,92 +28,112 @@ import org.springframework.transaction.annotation.Transactional;
 		"/spring-security.xml" })
 @Transactional
 public class PostDaoTest {
-	
+
 	@Autowired
 	private PostDao postDao;
-	
+
 	@Autowired
 	private UserDao userDao;
-	
-	BlogUser user1;
-	BlogUser user2;
-	Post post1;
-	Post post2;
 
-	@Before
-	public void setUp() throws Exception {
-		user1 = newUser("name1", "pass1");
-		user2 = newUser("name2", "pass2");
-		userDao.addNewUser(user1);
-		userDao.addNewUser(user2);
-		post1 = newPost("text1", user1);
-		post2 = newPost("text2", user2);
-		postDao.addNewPost(post1);
-		postDao.addNewPost(post2);
-	}
-	
 	@Test
 	public void shouldPostDaoBeNotNull() throws Exception {
-		assertNotNull(postDao);
+		assertThat(postDao).isNotNull();
 	}
-	
+
 	@Test
-	public void testGetAllPosts() throws Exception{
+	public void testGetAllPosts() throws Exception {
+		// given
+		givenUserWith2Post("test1", "news1", "news2");
+
+		// when
 		List<Post> postList = postDao.getAllPosts();
-		assertNotNull(postList);
-		assertEquals(postList.size(), 2);
+
+		// then
+		assertThat(postList).isNotNull().hasSize(2);
 	}
-	
+
 	@Test
-	public void testGetUserPosts() throws Exception{
-		List<Post> testPost = postDao.getUserPosts(user1);
-		assertNotNull(testPost);
-		assertEquals(testPost.size(), 1);
-		
+	public void testGetUserPosts() throws Exception {
+		// given
+		BlogUser user = givenUserWith2Post("test1", "news1", "news2");
+
+		// when
+		List<Post> userPosts = postDao.getUserPosts(user);
+		List<Post> allPosts = postDao.getAllPosts();
+
+		// then
+		assertThat(userPosts).isNotNull().hasSize(2).isIn(allPosts);
 	}
-	
+
 	@Test
-	public void testAddNewPost() throws Exception{
-		Post post = newPost("text", user1);
-		postDao.addNewPost(post);
-		List<Post> testPost = postDao.getUserPosts(user1);
-		assertEquals(testPost.size(), 2);		
-	}
-	
-	@Test
-	public void testGetPostById() throws Exception{
-		Post post = postDao.getUserPosts(user1).get(0);
+	public void testGetPostById() throws Exception {
+		// given
+		BlogUser user = givenUserWith2Post("test", "news1", "news2");
+		Post post = givenNewPost("news3", user);
+
+		// when
 		Post testPost = postDao.getPostById(post.getId());
-		assertNotNull(testPost);
-		assertEquals(testPost, post);
+
+		// then
+		assertThat(testPost).isNotNull().isEqualTo(post);
 	}
-	
+
 	@Test
-	public void testRemovePost() throws Exception{
-		postDao.removePost(post1);
+	public void testRemovePost() throws Exception {
+		// given
+		BlogUser user = givenUserWith2Post("test", "news1", "news2");
+		Post post = givenNewPost("news3", user);
+
+		// when
 		List<Post> postList = postDao.getAllPosts();
-		assertEquals(postList.size(), 1);
+		int size = postList.size();
+		postDao.removePost(post);
+		postList = postDao.getAllPosts();
+
+		// then
+		assertThat(postList).isNotNull().hasSize(size - 1);
 	}
-	
+
 	@Test
-	public void testGetPostsByUsersId() throws Exception{
-		List usersId = new ArrayList();
-		List<Post> postList = postDao.getPostsByUsersId(usersId);
-		assertNull(postList);
+	public void testGetPostsByUsersId() throws Exception {
+
+		// given
+		BlogUser user1 = givenUserWith2Post("test", "news1", "news2");
+		BlogUser user2 = givenNewUser("test1", "test1");
+
+		// when
+		List<Integer> usersId = new ArrayList<Integer>();
 		usersId.add(user1.getUserId());
-		postList = postDao.getPostsByUsersId(usersId);
-		assertEquals(postList.size(), 1);
+		usersId.add(user2.getUserId());
+
+		List<Post> usersPosts = postDao.getPostsByUsersId(usersId);
+		List<Post> allPosts = postDao.getAllPosts();
+		List<Post> zeroPosts = postDao.getPostsByUsersId(new ArrayList<Post>());
+
+		// then
+		assertThat(usersPosts).isNotNull().isIn(allPosts);
+		assertThat(zeroPosts).isNotNull().isEmpty();
 	}
-	
-	private BlogUser newUser(String name, String password) {
+
+	private BlogUser givenUserWith2Post(String namePassword, String news1,
+			String news2) {
+		BlogUser user = givenNewUser(namePassword, namePassword);
+		givenNewPost(news1, user);
+		givenNewPost(news2, user);
+		return user;
+	}
+
+	private BlogUser givenNewUser(String name, String password) {
 		Set<Authority> authorities = new HashSet<Authority>();
 		authorities.add(new Authority("ROLE_USER"));
 		BlogUser user = new BlogUser(name, password, authorities, true);
+		userDao.addNewUser(user);
 		return user;
 	}
-		
-	private Post newPost(String news, BlogUser user){
+
+	private Post givenNewPost(String news, BlogUser user) {
 		Post post = new Post(news, new Date(), user);
+		postDao.addNewPost(post);
 		return post;
 	}
 

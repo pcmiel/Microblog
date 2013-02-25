@@ -58,6 +58,8 @@ public class PostDaoImpl implements PostDao {
 					"FROM  Post WHERE user.userId IN (:usersId)");
 			query.setParameterList("usersId", usersId);
 			postList = (List<Post>) query.list();
+		} else {
+			postList = new ArrayList<Post>();
 		}
 		return postList;
 	}
