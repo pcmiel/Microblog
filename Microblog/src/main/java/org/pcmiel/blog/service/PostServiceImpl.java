@@ -24,7 +24,7 @@ public class PostServiceImpl implements PostService {
 
 	@Resource
 	private PostDao postDao;
-	
+
 	@Resource
 	private FollowDao followDao;
 

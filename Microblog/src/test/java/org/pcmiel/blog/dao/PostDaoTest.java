@@ -1,4 +1,4 @@
-package org.pcmiel.blog.controller;
+package org.pcmiel.blog.dao;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 

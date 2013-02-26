@@ -1,23 +1,17 @@
-package org.pcmiel.blog.controller;
+package org.pcmiel.blog.dao;
 
-import static org.junit.Assert.*;
+import static com.google.common.collect.Lists.newArrayList;
+import static org.fest.assertions.api.Assertions.assertThat;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import junit.framework.Assert;
-import static org.fest.assertions.api.Assertions.*;
-
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pcmiel.blog.dao.UserDao;
 import org.pcmiel.blog.entity.Authority;
 import org.pcmiel.blog.entity.BlogUser;
-import org.pcmiel.blog.entity.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -69,12 +63,11 @@ public class UserDaoTest {
 		List<BlogUser> users = given2Users(namePasswoard1, namePassword2);
 		BlogUser user3 = givenNewUser(namePassword3, namePassword3);
 		BlogUser user4 = givenNewUser(namePassword4, namePassword4);
+		List<Integer> usersIds = newArrayList(user3.getUserId(),
+				user4.getUserId());
 
 		// when
 		List<BlogUser> allUsers = userDao.getAllUsers();
-		List<Integer> usersIds = new ArrayList<Integer>();
-		usersIds.add(user3.getUserId());
-		usersIds.add(user4.getUserId());
 		List<BlogUser> testUsers = userDao.getUsersWhoseNotInList(usersIds);
 		List<BlogUser> emptyList = userDao
 				.getUsersWhoseNotInList(new ArrayList<Integer>());

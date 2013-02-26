@@ -193,6 +193,11 @@
 			<version>2.0M8</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>14.0-rc3</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>spring-hibernate</finalName>
