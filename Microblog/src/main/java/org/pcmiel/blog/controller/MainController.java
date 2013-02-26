@@ -13,27 +13,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/app/")
 public class MainController {
-
-	@Resource(name = "mainService")
-	private MainService mainService;
+	
+	@Resource(name = "postService")
+	private PostService postService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String showFollowingMessages(Model model) {
-		List<Post> posts = mainService.getFollowingPosts();
+		List<Post> posts = postService.getFollowingPosts();
 		model.addAttribute("posts", posts);
 		return "allMessages";
 	}	
 
 	@RequestMapping(value = "/myMessages", method = RequestMethod.GET)
 	public String showMyMessages(Model model) {
-		List<Post> posts = mainService.getMyPosts();
+		List<Post> posts = postService.getMyPosts();
 		model.addAttribute("posts", posts);
 		return "myMessages";
 	}
 
 	@RequestMapping(value = "/removeMessage", method = RequestMethod.POST)
 	public String removeMyMessage(@RequestParam("messageId") int id) {
-		mainService.removePost(id);
+		postService.removePost(id);
 		return "redirect:myMessages";
 	}
 }

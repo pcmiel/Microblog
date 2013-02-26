@@ -22,7 +22,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -37,91 +36,37 @@ import org.springframework.transaction.annotation.Transactional;
 public class MainServiceImpl implements MainService, UserDetailsService {
 	private static final Logger logger = LoggerFactory.getLogger(MainServiceImpl.class);
 	
+	
+	@Resource
+	private UserService userService;
+	
 	@Resource
 	private PostDao postDao;
 
+	
 	@Resource
-	private UserDao userDao;
+	private UserDao userDao;	
 
-	@Resource
-	private AuthorityDao authorityDao;
+	
 
-	@Resource
-	private FollowDao followDao;
+	public void InsertTestDatas() {
+		int userNumber = 4;
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+		// authorties
+		List<String> authorities = new ArrayList<String>();
+		authorities.add("ROLE_USER");
 
-	public List<Post> getAllPosts() {
-		List<Post> resultPosts = postDao.getAllPosts();
-		// Collections.sort(resultPosts);
-		return resultPosts;
-	}
-
-	public List<Post> getFollowingPosts() {
-		BlogUser user = getLoggedInUser();
-		List followingUsersID = followDao.getFollowingUsersId(user);
-		List<Post> followingPosts = postDao.getPostsByUsersId(followingUsersID);
-		if (followingPosts == null) {
-			followingPosts = getMyPosts();
-		} else {
-			followingPosts.addAll(getMyPosts());
-		}
-		Collections.sort(followingPosts);
-		return followingPosts;
-	}
-
-	public List<Post> getMyPosts() {
-		BlogUser user = getLoggedInUser();
-		return postDao.getUserPosts(user);
-	}
-
-	public void addNewPost(String news, BlogUser user) {
-		if (user == null) {
-			logger.warn("User not exist");
-			return;
-		}
-		Date date = new Date();
-		Post post = new Post(news, date, user);
-		postDao.addNewPost(post);
-	}
-
-	public void removePost(Integer id) {
-		Post post = postDao.getPostById(id);
-		if (post != null) {
-			postDao.removePost(post);
+		// users
+		Set<BlogUser> users = new HashSet<BlogUser>();
+		for (int i = 0; i < userNumber; i++) {
+			String name = "test" + i;
+			userService.addNewUser(name, name, authorities, true);
+			postDao.addNewPost(new Post("testtestest " + name, new Date(),
+					userDao.getUserByUserName(name)));
 		}
 	}
 
-	public void addNewUser(String userName, String password,
-			List<String> authorities, Boolean isEnabled) {
-
-		if (checkThatUserExist(userName)) {
-			logger.warn(userName + " actual exist");
-			return;
-		}
-		password = passwordEncoder.encodePassword(password, null);
-		Set<Authority> authoritySet = new HashSet<Authority>();
-		for (String role : authorities) {
-			Authority authority = authorityDao.getAuthority(role);
-			if (authority == null) {
-				addNewAuthority(role);
-				authority = authorityDao.getAuthority(role);
-			}
-			if (authority != null) {
-				authoritySet.add(authority);
-			}
-		}
-		BlogUser user = new BlogUser(userName, password, authoritySet,
-				isEnabled);
-		userDao.addNewUser(user);
-	}
-
-	public void addNewAuthority(String authorityName) {
-		Authority authority = new Authority(authorityName);
-		authorityDao.addNewAuthority(authority);
-	}
-
+	
 	public UserDetails loadUserByUsername(String userName)
 			throws UsernameNotFoundException, DataAccessException {
 		BlogUser user = userDao.getUserByUserName(userName);
@@ -137,82 +82,5 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		}
 		return new User(user.getUsername(), user.getPassword(), true, true,
 				true, true, authorities);
-	}
-
-	public List<BlogUser> getAllUsers() {
-		List<BlogUser> result = userDao.getAllUsers();
-		Collections.sort(result);
-		return result;
-	}
-
-	public Boolean checkThatUserExist(String username) {
-		BlogUser user = userDao.getUserByUserName(username);
-		return user != null;
-	}
-
-	public BlogUser getLoggedInUser() {
-		User user = (User) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
-		return userDao.getUserByUserName(user.getUsername());
-	}
-
-	public void InsertTestDatas() {
-		int userNumber = 4;
-
-		// authorties
-		List<String> authorities = new ArrayList<String>();
-		authorities.add("ROLE_USER");
-
-		// users
-		Set<BlogUser> users = new HashSet<BlogUser>();
-		for (int i = 0; i < userNumber; i++) {
-			String name = "test" + i;
-			addNewUser(name, name, authorities, true);
-			postDao.addNewPost(new Post("testtestest " + name, new Date(),
-					userDao.getUserByUserName(name)));
-		}
-	}
-
-	public List<BlogUser> getFollowing(String username) {
-		BlogUser user = userDao.getUserByUserName(username);
-		List followingUsersId = followDao.getFollowingUsersId(user);
-		List<BlogUser> followingUsers = userDao.getUsersByIds(followingUsersId);
-		if (followingUsers == null || followingUsers.size() == 0) {
-			return new ArrayList<BlogUser>();
-		}
-		followingUsers.remove(user);
-		Collections.sort(followingUsers);
-		return followingUsers;
-	}
-
-	public List<BlogUser> getUnfollowing(String username) {
-		BlogUser user = userDao.getUserByUserName(username);
-		List followingUsersId = followDao.getFollowingUsersId(user);
-		List<BlogUser> unfollowingUsers = userDao
-				.getUsersWhoseNotInList(followingUsersId);
-		if (unfollowingUsers == null || unfollowingUsers.size() == 0) {
-			return new ArrayList<BlogUser>();
-		}
-		unfollowingUsers.remove(user);
-		Collections.sort(unfollowingUsers);
-		return unfollowingUsers;
-	}
-
-	public void addFollowing(String username, String followUsername) {
-		if (username.equals(followUsername)) {
-			logger.warn("User can't follow himself");
-			return;
-		}
-		Set<BlogUser> follow = new HashSet<BlogUser>();
-		follow.add(userDao.getUserByUserName(followUsername));
-		BlogUser user = userDao.getUserByUserName(username);
-		followDao.addFollowing(user, follow);
-	}
-
-	public void removeFollowing(String username, String unfollowUsername) {
-		Set<BlogUser> unfollow = new HashSet<BlogUser>();
-		unfollow.add(userDao.getUserByUserName(unfollowUsername));
-		followDao
-				.removeFollowing(userDao.getUserByUserName(username), unfollow);
 	}
 }

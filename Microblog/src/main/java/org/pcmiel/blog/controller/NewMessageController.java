@@ -16,8 +16,11 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/app/newMessage")
 public class NewMessageController {
 
-	@Resource(name = "mainService")
-	private MainService mainService;
+	@Resource(name = "userService")
+	private UserService userService;
+
+	@Resource(name = "postService")
+	private PostService postService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView newMessage() {
@@ -30,8 +33,8 @@ public class NewMessageController {
 		if (result.hasErrors()) {
 			return "newMessage";
 		}
-		BlogUser user = mainService.getLoggedInUser();
-		mainService.addNewPost(post.getNews(), user);
+		BlogUser user = userService.getLoggedInUser();
+		postService.addNewPost(post.getNews(), user);
 		return "redirect:";
 	}
 }
