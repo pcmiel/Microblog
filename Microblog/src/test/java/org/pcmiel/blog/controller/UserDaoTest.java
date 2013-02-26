@@ -3,11 +3,13 @@ package org.pcmiel.blog.controller;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import junit.framework.Assert;
+import static org.fest.assertions.api.Assertions.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +17,7 @@ import org.junit.runner.RunWith;
 import org.pcmiel.blog.dao.UserDao;
 import org.pcmiel.blog.entity.Authority;
 import org.pcmiel.blog.entity.BlogUser;
+import org.pcmiel.blog.entity.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -29,70 +32,105 @@ public class UserDaoTest {
 	@Autowired
 	UserDao userDao;
 
-	@Before
-	public void setUp() throws Exception {
-		userDao.addNewUser(newUser("name1", "pass1"));
-		userDao.addNewUser(newUser("name2", "pass2"));
-	}
+	// @Before
+	// public void setUp() throws Exception {
+	// userDao.addNewUser(givenNewUser("name1", "pass1"));
+	// userDao.addNewUser(givenNewUser("name2", "pass2"));
+	// }
 
 	@Test
 	public void shouldUserDaoBeNotNull() throws Exception {
-		assertNotNull(userDao);
+		assertThat(userDao).isNotNull();
 	}
 
 	@Test
-	public void TestAddNewUser() throws Exception {
-		BlogUser user = newUser("name", "test");
-		userDao.addNewUser(user);
-		BlogUser user2 = userDao.getUserByUserName("name");
-		assertNotNull(user2);
-	}
-	
-	@Test
-	public void TestGetUserByUserName() throws Exception{
-		BlogUser user = userDao.getUserByUserName("name1");
-		assertEquals(user.getUsername(), "name1");
-		BlogUser user2 = userDao.getUserByUserName("name3");
-		assertNull(user2);
-	}
-	
-	@Test
-	public void TestGetAllUsers() throws Exception{
-		List<BlogUser> usersList = userDao.getAllUsers();
-		assertEquals(usersList.size(), 2);
-	}
-	
-	@Test
-	public void TestGetUsersById() throws Exception{
-		BlogUser user = userDao.getUserByUserName("name1");
-		BlogUser user2 = userDao.getUserByUserName("name2");
-		List Ids = new ArrayList<Long>();
-		Ids.add(user.getUserId());
-		Ids.add(user2.getUserId());
-		List<BlogUser> usersList = userDao.getUsersById(Ids);		
-		assertNotNull(usersList);
-		assertEquals(usersList.size(), 2);
-		assertNull(userDao.getUsersById(null));
-		assertNull(userDao.getUsersById(new ArrayList()));
-	}
-	
-	@Test
-	public void TestGetUsersWhoseNotInList() throws Exception{
-		BlogUser user = userDao.getUserByUserName("name1");
-		List Ids = new ArrayList<Long>();
-		Ids.add(user.getUserId());
-		List<BlogUser> usersList = userDao.getUsersWhoseNotInList(Ids);		
-		assertNotNull(usersList);
-		assertEquals(usersList.size(), 1);
-		assertNotSame(user.getUsername(), usersList.get(0).getUsername());
-		assertEquals(userDao.getUsersWhoseNotInList(null).size(), 2);
-		assertEquals(userDao.getUsersWhoseNotInList(new ArrayList()).size(), 2);
+	public void TestGetUserByUserName() throws Exception {
+		// given
+		String namePassword1 = "test1";
+		String namePassword2 = "test2";
+		List<BlogUser> users = given2Users(namePassword1, namePassword2);
+
+		// when
+		BlogUser user1 = userDao.getUserByUserName(namePassword1);
+		BlogUser user2 = userDao.getUserByUserName(namePassword2);
+
+		// then
+		assertThat(user1).isNotNull().isIn(users).isNotEqualTo(user2);
 	}
 
-	private BlogUser newUser(String name, String password) {
+	@Test
+	public void TestGetUsersWhoseNotInList() throws Exception {
+
+		// given
+		String namePasswoard1 = "test1";
+		String namePassword2 = "test2";
+		String namePassword3 = "test3";
+		String namePassword4 = "test4";
+		List<BlogUser> users = given2Users(namePasswoard1, namePassword2);
+		BlogUser user3 = givenNewUser(namePassword3, namePassword3);
+		BlogUser user4 = givenNewUser(namePassword4, namePassword4);
+
+		// when
+		List<BlogUser> allUsers = userDao.getAllUsers();
+		List<Integer> usersIds = new ArrayList<Integer>();
+		usersIds.add(user3.getUserId());
+		usersIds.add(user4.getUserId());
+		List<BlogUser> testUsers = userDao.getUsersWhoseNotInList(usersIds);
+		List<BlogUser> emptyList = userDao
+				.getUsersWhoseNotInList(new ArrayList<Integer>());
+
+		// then
+		assertThat(testUsers).isNotNull().containsAll(users);
+		assertThat(emptyList).isNotNull().hasSize(allUsers.size());
+	}
+
+	@Test
+	public void TestGetAllUsers() throws Exception {
+		// given
+		String namePassword1 = "test1";
+		String namePassword2 = "test2";
+		List<BlogUser> users = given2Users(namePassword1, namePassword2);
+
+		// when
+		List<BlogUser> allUsers = userDao.getAllUsers();
+
+		// then
+		assertThat(allUsers).isNotNull().containsAll(users);
+	}
+
+	@Test
+	public void TestGetUsersById() throws Exception {
+		// given
+		String namePassword1 = "test1";
+		String namePassword2 = "test2";
+		given2Users(namePassword1, namePassword2);
+
+		// when
+		List<BlogUser> allUsers = userDao.getAllUsers();
+		List<Integer> usersIds = new ArrayList<Integer>();
+		usersIds.add(allUsers.get(0).getUserId());
+		usersIds.add(allUsers.get(1).getUserId());
+		List<BlogUser> users = userDao.getUsersByIds(usersIds);
+		List<BlogUser> emptyList = userDao
+				.getUsersByIds(new ArrayList<Integer>());
+		// then
+		assertThat(users).isNotNull().isIn(allUsers);
+		assertThat(emptyList).isNotNull().isEmpty();
+	}
+
+	private List<BlogUser> given2Users(String namePassword1,
+			String namePassword2) {
+		List<BlogUser> users = new ArrayList<BlogUser>();
+		users.add(givenNewUser(namePassword1, namePassword1));
+		users.add(givenNewUser(namePassword2, namePassword2));
+		return users;
+	}
+
+	private BlogUser givenNewUser(String name, String password) {
 		Set<Authority> authorities = new HashSet<Authority>();
 		authorities.add(new Authority("ROLE_USER"));
 		BlogUser user = new BlogUser(name, password, authorities, true);
+		userDao.addNewUser(user);
 		return user;
 	}
 }

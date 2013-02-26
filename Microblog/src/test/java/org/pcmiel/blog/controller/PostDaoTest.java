@@ -1,16 +1,13 @@
 package org.pcmiel.blog.controller;
 
-import static org.junit.Assert.*;
-import static org.junit.Assert.assertNotNull;
+import static org.fest.assertions.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import static org.fest.assertions.api.Assertions.*;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pcmiel.blog.dao.PostDao;

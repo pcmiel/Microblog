@@ -90,5 +90,4 @@ public class FollowDaoTest {
 		BlogUser user = new BlogUser(name, password, authorities, true);
 		return user;
 	}
-
 }

@@ -44,9 +44,9 @@ public class UserDaoImpl implements UserDao {
 		return userList;
 	}
 
-	public List<BlogUser> getUsersById(List usersId) {
-		if(usersId==null || usersId.size()< 1){
-			return null;
+	public List<BlogUser> getUsersByIds(List usersId) {
+		if(usersId.size()< 1){
+			return new ArrayList<BlogUser>();
 		}
 		List usersList = getCurrentSession().createCriteria(BlogUser.class)
 				.add(Restrictions.in("userId", usersId)).list();
@@ -54,7 +54,7 @@ public class UserDaoImpl implements UserDao {
 	}
 	
 	public List<BlogUser> getUsersWhoseNotInList(List usersId) {
-		if(usersId==null || usersId.size()< 1){
+		if(usersId.size()< 1){
 			return getAllUsers();
 		}
 		List usersList = getCurrentSession().createCriteria(BlogUser.class)

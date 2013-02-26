@@ -176,7 +176,7 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 	public List<BlogUser> getFollowing(String username) {
 		BlogUser user = userDao.getUserByUserName(username);
 		List followingUsersId = followDao.getFollowingUsersId(user);
-		List<BlogUser> followingUsers = userDao.getUsersById(followingUsersId);
+		List<BlogUser> followingUsers = userDao.getUsersByIds(followingUsersId);
 		if (followingUsers == null || followingUsers.size() == 0) {
 			return new ArrayList<BlogUser>();
 		}
