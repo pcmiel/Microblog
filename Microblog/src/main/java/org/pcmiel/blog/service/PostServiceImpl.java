@@ -1,5 +1,6 @@
 package org.pcmiel.blog.service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -39,6 +40,9 @@ public class PostServiceImpl implements PostService {
 
 	public List<Post> getFollowingPosts() {
 		BlogUser user = userService.getLoggedInUser();
+		if(user == null){
+			return new ArrayList<Post>();
+		}
 		List followingUsersID = followDao.getFollowingUsersId(user);
 		List<Post> followingPosts = postDao.getPostsByUsersId(followingUsersID);
 		if (followingPosts == null) {

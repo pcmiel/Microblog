@@ -32,6 +32,9 @@ public class FollowServiceImpl implements FollowService {
 
 	public List<BlogUser> getFollowing(String username) {
 		BlogUser user = userDao.getUserByUserName(username);
+		if(user == null){
+			return new ArrayList<BlogUser>();
+		}
 		List followingUsersId = followDao.getFollowingUsersId(user);
 		List<BlogUser> followingUsers = userDao.getUsersByIds(followingUsersId);
 		if (followingUsers == null || followingUsers.size() == 0) {
@@ -44,6 +47,9 @@ public class FollowServiceImpl implements FollowService {
 
 	public List<BlogUser> getUnfollowing(String username) {
 		BlogUser user = userDao.getUserByUserName(username);
+		if(user == null){
+			return new ArrayList<BlogUser>();
+		}
 		List followingUsersId = followDao.getFollowingUsersId(user);
 		List<BlogUser> unfollowingUsers = userDao
 				.getUsersWhoseNotInList(followingUsersId);

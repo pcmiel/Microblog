@@ -12,15 +12,18 @@ import org.junit.runner.RunWith;
 import org.pcmiel.blog.entity.BlogUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/applicationContext.xml",
 		"/spring-security.xml" })
+@Transactional
 public class UserServiceTest {
 
 	private static final String AUTHORITY_NAME = "ROLE_TEST";
 	private static final String USER_NAME2 = "test1";
 	private static final String USER_NAME1 = "test2";
+	
 	@Resource(name = "userService")
 	private UserService userService;
 
