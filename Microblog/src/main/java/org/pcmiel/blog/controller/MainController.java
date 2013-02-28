@@ -1,9 +1,11 @@
 package org.pcmiel.blog.controller;
 
 import java.util.List;
+
 import javax.annotation.Resource;
-import org.pcmiel.blog.entity.*;
-import org.pcmiel.blog.service.*;
+
+import org.pcmiel.blog.entity.Post;
+import org.pcmiel.blog.service.PostService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/app/")
 public class MainController {
-	
+
 	@Resource(name = "postService")
 	private PostService postService;
 
@@ -22,7 +24,7 @@ public class MainController {
 		List<Post> posts = postService.getFollowingPosts();
 		model.addAttribute("posts", posts);
 		return "allMessages";
-	}	
+	}
 
 	@RequestMapping(value = "/myMessages", method = RequestMethod.GET)
 	public String showMyMessages(Model model) {

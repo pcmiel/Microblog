@@ -34,7 +34,6 @@ public class PostServiceImpl implements PostService {
 
 	public List<Post> getAllPosts() {
 		List<Post> resultPosts = postDao.getAllPosts();
-		// Collections.sort(resultPosts);
 		return resultPosts;
 	}
 

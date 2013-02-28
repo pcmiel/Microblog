@@ -10,8 +10,8 @@
 <title>Register</title>
 </head>
 <body>
-		<div class="text-info">
-			<h1>Join to us</h1>
+	<div class="text-info">
+		<h1>Join to us</h1>
 	</div>
 	<div class="pull-left">
 		<form:form method='POST' action="register" commandName="user">
@@ -32,7 +32,8 @@
 				<span class="help-inline"><form:errors class="alert-error"
 						path="confirmPassword" /></span>
 			</div>
-			<input type="submit" class="btn btn-large btn-primary" value="Register" />
+			<input type="submit" class="btn btn-large btn-primary"
+				value="Register" />
 		</form:form>
 	</div>
 </body>

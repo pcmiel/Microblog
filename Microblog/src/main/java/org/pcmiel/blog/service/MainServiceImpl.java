@@ -1,9 +1,7 @@
 package org.pcmiel.blog.service;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -11,8 +9,6 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
-import org.pcmiel.blog.dao.AuthorityDao;
-import org.pcmiel.blog.dao.FollowDao;
 import org.pcmiel.blog.dao.PostDao;
 import org.pcmiel.blog.dao.UserDao;
 import org.pcmiel.blog.entity.Authority;
@@ -20,10 +16,8 @@ import org.pcmiel.blog.entity.BlogUser;
 import org.pcmiel.blog.entity.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -34,29 +28,22 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("mainService")
 @Transactional
 public class MainServiceImpl implements MainService, UserDetailsService {
-	private static final Logger logger = LoggerFactory.getLogger(MainServiceImpl.class);
-	
-	
+	private static final Logger logger = LoggerFactory
+			.getLogger(MainServiceImpl.class);
+
 	@Resource
 	private UserService userService;
-	
+
 	@Resource
 	private PostDao postDao;
 
-	
 	@Resource
-	private UserDao userDao;	
-
-	
+	private UserDao userDao;
 
 	public void InsertTestDatas() {
 		int userNumber = 4;
-
-		// authorties
 		List<String> authorities = new ArrayList<String>();
 		authorities.add("ROLE_USER");
-
-		// users
 		Set<BlogUser> users = new HashSet<BlogUser>();
 		for (int i = 0; i < userNumber; i++) {
 			String name = "test" + i;
@@ -66,7 +53,6 @@ public class MainServiceImpl implements MainService, UserDetailsService {
 		}
 	}
 
-	
 	public UserDetails loadUserByUsername(String userName)
 			throws UsernameNotFoundException, DataAccessException {
 		BlogUser user = userDao.getUserByUserName(userName);

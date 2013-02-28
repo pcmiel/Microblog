@@ -1,10 +1,11 @@
 package org.pcmiel.blog.service;
 
+import static org.fest.assertions.api.Assertions.assertThat;
+
 import java.util.List;
 
 import javax.annotation.Resource;
 
-import static org.fest.assertions.api.Assertions.assertThat;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pcmiel.blog.dao.PostDao;
@@ -34,13 +35,13 @@ public class MainServiceTest {
 
 	@Test
 	public void testInsertTestData() throws Exception {
-		//given
+		// given
 		mainService.InsertTestDatas();
-		
-		//when
+
+		// when
 		List<BlogUser> users = userService.getAllUsers();
-		
-		//then
+
+		// then
 		assertThat(users).isNotNull().hasSize(4);
 	}
 

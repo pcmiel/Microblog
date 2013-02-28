@@ -26,12 +26,6 @@ public class UserDaoTest {
 	@Autowired
 	UserDao userDao;
 
-	// @Before
-	// public void setUp() throws Exception {
-	// userDao.addNewUser(givenNewUser("name1", "pass1"));
-	// userDao.addNewUser(givenNewUser("name2", "pass2"));
-	// }
-
 	@Test
 	public void shouldUserDaoBeNotNull() throws Exception {
 		assertThat(userDao).isNotNull();
@@ -54,7 +48,6 @@ public class UserDaoTest {
 
 	@Test
 	public void TestGetUsersWhoseNotInList() throws Exception {
-
 		// given
 		String namePasswoard1 = "test1";
 		String namePassword2 = "test2";

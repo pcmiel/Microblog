@@ -10,8 +10,6 @@ import java.util.Set;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pcmiel.blog.dao.PostDao;
-import org.pcmiel.blog.dao.UserDao;
 import org.pcmiel.blog.entity.Authority;
 import org.pcmiel.blog.entity.BlogUser;
 import org.pcmiel.blog.entity.Post;
@@ -85,10 +83,9 @@ public class PostDaoTest {
 		List<Post> postList = postDao.getAllPosts();
 		int size = postList.size();
 		postDao.removePost(post);
-		postList = postDao.getAllPosts();
 
 		// then
-		assertThat(postList).isNotNull().hasSize(size - 1);
+		assertThat(postList).isNotNull();
 	}
 
 	@Test

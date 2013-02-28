@@ -4,5 +4,6 @@ import org.pcmiel.blog.entity.Authority;
 
 public interface AuthorityDao {
 	void addNewAuthority(Authority authority);
+
 	Authority getAuthority(String authorityName);
 }

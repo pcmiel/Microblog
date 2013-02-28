@@ -6,10 +6,9 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
-import org.pcmiel.blog.entity.*;
-import org.pcmiel.blog.service.MainService;
+import org.pcmiel.blog.entity.BlogUser;
 import org.pcmiel.blog.service.UserService;
-import org.pcmiel.blog.validation.*;
+import org.pcmiel.blog.validation.RegistrationValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -25,26 +24,28 @@ public class RegistrationController {
 
 	@Autowired
 	private RegistrationValidation registrationValidation;
-		
+
 	@Resource(name = "userService")
 	private UserService userService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView showRegistrationForm(ModelMap model) {
-         return new ModelAndView("register", "user", new BlogUser());
+		return new ModelAndView("register", "user", new BlogUser());
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String processRegister(@Valid @ModelAttribute("user") BlogUser user,
 			BindingResult result) {
-		Boolean usernameExist = userService.checkThatUserExist(user.getUsername());
+		Boolean usernameExist = userService.checkThatUserExist(user
+				.getUsername());
 		registrationValidation.validate(user, result, usernameExist);
 		if (result.hasErrors()) {
 			return "register";
 		}
 		List<String> authorities = new ArrayList<String>();
 		authorities.add("ROLE_USER");
-		userService.addNewUser(user.getUsername(), user.getPassword(), authorities, true);
+		userService.addNewUser(user.getUsername(), user.getPassword(),
+				authorities, true);
 		return "redirect:login";
 	}
 }

@@ -13,7 +13,7 @@ public class RegistrationValidation {
 
 	public void validate(Object target, Errors errors, Boolean usernameExist) {
 		BlogUser user = (BlogUser) target;
-		if(usernameExist){
+		if (usernameExist) {
 			errors.rejectValue("username", "user.username.exist");
 		}
 		String password = user.getPassword();

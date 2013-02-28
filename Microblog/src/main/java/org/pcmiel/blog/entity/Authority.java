@@ -1,7 +1,5 @@
 package org.pcmiel.blog.entity;
 
-import java.math.BigInteger;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,15 +9,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "AUTHORITIES")
 public class Authority {
-	
-	public Authority()
-	{
+
+	public Authority() {
 	}
-	
-	public Authority(String authority)
-	{
+
+	public Authority(String authority) {
 		this.authority = authority;
-	}	
+	}
 
 	@Id
 	@GeneratedValue
@@ -44,7 +40,7 @@ public class Authority {
 	public void setAuthority(String authority) {
 		this.authority = authority;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -52,7 +48,7 @@ public class Authority {
 		if (authorityId == null) {
 			return -1;
 		}
-		result =  (prime * result + authorityId);
+		result = (prime * result + authorityId);
 		return result;
 	}
 

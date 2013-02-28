@@ -62,7 +62,6 @@ public class UserServiceImpl implements UserService {
 
 	public List<BlogUser> getAllUsers() {
 		List<BlogUser> result = userDao.getAllUsers();
-		// Collections.sort(result);
 		return result;
 	}
 

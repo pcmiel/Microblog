@@ -3,8 +3,10 @@ package org.pcmiel.blog.controller;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
-import org.pcmiel.blog.entity.*;
-import org.pcmiel.blog.service.*;
+import org.pcmiel.blog.entity.BlogUser;
+import org.pcmiel.blog.entity.Post;
+import org.pcmiel.blog.service.PostService;
+import org.pcmiel.blog.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;

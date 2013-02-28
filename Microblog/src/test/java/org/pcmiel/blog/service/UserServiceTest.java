@@ -23,7 +23,7 @@ public class UserServiceTest {
 	private static final String AUTHORITY_NAME = "ROLE_TEST";
 	private static final String USER_NAME2 = "test1";
 	private static final String USER_NAME1 = "test2";
-	
+
 	@Resource(name = "userService")
 	private UserService userService;
 

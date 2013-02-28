@@ -91,7 +91,7 @@ public class PostServiceTest {
 		// then
 		assertThat(postNumberAfter).isEqualTo(postNumberBefore);
 	}
-	
+
 	@Test
 	public void testGetUserFollowingPosts() throws Exception {
 		// given
