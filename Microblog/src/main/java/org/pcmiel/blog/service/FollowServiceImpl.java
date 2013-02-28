@@ -9,7 +9,6 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 import org.pcmiel.blog.dao.FollowDao;
-import org.pcmiel.blog.dao.PostDao;
 import org.pcmiel.blog.dao.UserDao;
 import org.pcmiel.blog.entity.BlogUser;
 import org.slf4j.Logger;
@@ -32,7 +31,7 @@ public class FollowServiceImpl implements FollowService {
 
 	public List<BlogUser> getFollowing(String username) {
 		BlogUser user = userDao.getUserByUserName(username);
-		if(user == null){
+		if (user == null) {
 			return new ArrayList<BlogUser>();
 		}
 		List followingUsersId = followDao.getFollowingUsersId(user);
@@ -47,7 +46,7 @@ public class FollowServiceImpl implements FollowService {
 
 	public List<BlogUser> getUnfollowing(String username) {
 		BlogUser user = userDao.getUserByUserName(username);
-		if(user == null){
+		if (user == null) {
 			return new ArrayList<BlogUser>();
 		}
 		List followingUsersId = followDao.getFollowingUsersId(user);

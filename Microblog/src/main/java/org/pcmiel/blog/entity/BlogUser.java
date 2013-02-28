@@ -1,6 +1,5 @@
 package org.pcmiel.blog.entity;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -16,18 +15,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table(name = "USERS", uniqueConstraints=@UniqueConstraint(columnNames="username"))
-public class BlogUser implements UserDetails , Comparable<BlogUser>{
+@Table(name = "USERS", uniqueConstraints = @UniqueConstraint(columnNames = "username"))
+public class BlogUser implements UserDetails, Comparable<BlogUser> {
 
 	public BlogUser() {
 	}
@@ -39,12 +38,12 @@ public class BlogUser implements UserDetails , Comparable<BlogUser>{
 		this.setAuthoritySet(authorities);
 		this.setEnabled(isEnabled);
 	}
-	
+
 	private static final long serialVersionUID = 133260785057988071L;
 
 	@Id
 	@GeneratedValue
-	@Column(name = "USER_ID")	
+	@Column(name = "USER_ID")
 	private Integer userId;
 
 	public Integer getUserId() {
@@ -52,7 +51,7 @@ public class BlogUser implements UserDetails , Comparable<BlogUser>{
 	}
 
 	@NotEmpty(message = "Login is required!")
-	@Size(min = 3, max = 20, message = "Login length must be between 3 and 40")
+	@Size(min = 3, max = 20, message = "Login length must be between 3 and 20")
 	@Column(name = "USERNAME")
 	private String username;
 
@@ -74,7 +73,7 @@ public class BlogUser implements UserDetails , Comparable<BlogUser>{
 	@Column(name = "ENABLED")
 	private Boolean enabled;
 
-	@ManyToMany(cascade = {CascadeType.ALL})
+	@ManyToMany(cascade = { CascadeType.MERGE })
 	@JoinTable(name = "USER_AUTHORITIES", joinColumns = { @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "AUTHORITY_ID") })
 	private Set<Authority> authoritySet;
 
@@ -142,13 +141,11 @@ public class BlogUser implements UserDetails , Comparable<BlogUser>{
 	public String getUsername() {
 		return username;
 	}
-	
-	@ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name="FOLLOWING", 
-                joinColumns={@JoinColumn(name="USER_ID")}, 
-                inverseJoinColumns={@JoinColumn(name="FOLLOWING_ID")})
-    private Set<BlogUser> following = new HashSet<BlogUser>();
-	
+
+	@ManyToMany(cascade = { CascadeType.MERGE })
+	@JoinTable(name = "FOLLOWING", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "FOLLOWING_ID") })
+	private Set<BlogUser> following = new HashSet<BlogUser>();
+
 	public Set<BlogUser> getFollowing() {
 		return following;
 	}
@@ -160,7 +157,7 @@ public class BlogUser implements UserDetails , Comparable<BlogUser>{
 		if (userId == null) {
 			return -1;
 		}
-		result =  (prime * result + userId);
+		result = (prime * result + userId);
 		return result;
 	}
 
@@ -184,5 +181,5 @@ public class BlogUser implements UserDetails , Comparable<BlogUser>{
 
 	public int compareTo(BlogUser user) {
 		return this.getUsername().compareTo(user.getUsername());
-	}	
+	}
 }

@@ -1,6 +1,5 @@
 package org.pcmiel.blog.dao;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +23,8 @@ public class PostDaoImpl implements PostDao {
 	}
 
 	public List<Post> getAllPosts() {
-		Query query = getCurrentSession().createQuery("FROM  Post");
+		Query query = getCurrentSession().createQuery(
+				"FROM  Post  ORDER BY date DESC");
 		List<Post> postList = (List<Post>) query.list();
 		return postList;
 	}
@@ -45,7 +45,7 @@ public class PostDaoImpl implements PostDao {
 
 	public List<Post> getUserPosts(BlogUser user) {
 		Query query = getCurrentSession().createQuery(
-				"FROM  Post WHERE user= :user");
+				"FROM  Post WHERE user= :user  ORDER BY date DESC");
 		query.setParameter("user", user);
 		List<Post> postList = (List<Post>) query.list();
 		return postList;
@@ -54,8 +54,9 @@ public class PostDaoImpl implements PostDao {
 	public List<Post> getPostsByUsersId(List usersId) {
 		List<Post> postList = null;
 		if (usersId.size() > 0) {
-			Query query = getCurrentSession().createQuery(
-					"FROM  Post WHERE user.userId IN (:usersId)");
+			Query query = getCurrentSession()
+					.createQuery(
+							"FROM  Post WHERE user.userId IN (:usersId) ORDER BY date DESC");
 			query.setParameterList("usersId", usersId);
 			postList = (List<Post>) query.list();
 		} else {

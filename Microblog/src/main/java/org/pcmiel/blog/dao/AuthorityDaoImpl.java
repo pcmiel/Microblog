@@ -13,18 +13,20 @@ public class AuthorityDaoImpl implements AuthorityDao {
 
 	@Resource(name = "sessionFactory")
 	private SessionFactory sessionFactory;
-	
+
 	public Session getCurrentSession() {
 		return this.sessionFactory.getCurrentSession();
 	}
-	
+
 	public void addNewAuthority(Authority authority) {
 		getCurrentSession().save(authority);
 	}
 
 	public Authority getAuthority(String authorityName) {
 		Authority authority = null;
-		Query query = getCurrentSession().createQuery("FROM  Authority WHERE authority= :authorityName");
+		Query query = getCurrentSession()
+				.createQuery(
+						"FROM  Authority WHERE authority= :authorityName ORDER BY authority DESC");
 		query.setParameter("authorityName", authorityName);
 		authority = (Authority) query.uniqueResult();
 		return authority;

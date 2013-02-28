@@ -1,6 +1,5 @@
 package org.pcmiel.blog.service;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -63,7 +62,7 @@ public class UserServiceImpl implements UserService {
 
 	public List<BlogUser> getAllUsers() {
 		List<BlogUser> result = userDao.getAllUsers();
-		Collections.sort(result);
+		// Collections.sort(result);
 		return result;
 	}
 

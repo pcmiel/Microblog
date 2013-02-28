@@ -40,7 +40,7 @@ public class PostServiceImpl implements PostService {
 
 	public List<Post> getFollowingPosts() {
 		BlogUser user = userService.getLoggedInUser();
-		if(user == null){
+		if (user == null) {
 			return new ArrayList<Post>();
 		}
 		List followingUsersID = followDao.getFollowingUsersId(user);
