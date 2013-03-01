@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PostServiceImpl implements PostService {
 
 	private static final Logger logger = LoggerFactory
-			.getLogger(MainServiceImpl.class);
+			.getLogger(PostServiceImpl.class);
 
 	@Resource
 	private PostDao postDao;

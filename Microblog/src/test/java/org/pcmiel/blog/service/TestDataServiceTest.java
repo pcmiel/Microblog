@@ -19,13 +19,13 @@ import org.springframework.transaction.annotation.Transactional;
 @ContextConfiguration(locations = { "/applicationContext.xml",
 		"/spring-security.xml" })
 @Transactional
-public class MainServiceTest {
+public class TestDataServiceTest {
 
 	@Resource
 	private UserService userService;
 
 	@Resource
-	private MainService mainService;
+	private TestDataService testDataService;
 
 	@Resource
 	private PostDao postDao;
@@ -36,7 +36,7 @@ public class MainServiceTest {
 	@Test
 	public void testInsertTestData() throws Exception {
 		// given
-		mainService.InsertTestDatas();
+		testDataService.InsertTestDatas();
 
 		// when
 		List<BlogUser> users = userService.getAllUsers();

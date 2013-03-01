@@ -1,7 +1,7 @@
 package org.pcmiel.blog.service;
 
 
-public interface MainService {
+public interface TestDataService {
 
 	void InsertTestDatas();
 

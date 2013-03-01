@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class FollowServiceImpl implements FollowService {
 
 	private static final Logger logger = LoggerFactory
-			.getLogger(MainServiceImpl.class);
+			.getLogger(FollowServiceImpl.class);
 
 	@Resource
 	private FollowDao followDao;
