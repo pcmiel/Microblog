@@ -1,15 +1,15 @@
 # Microblog #
-Microblog jest to aplikacja webowa bêd¹ca pewn¹ form¹ dziennika internetowego, którego noœnikiem informacji s¹ krótkie wpisy nieprzekraczaj¹ce d³ugoœæ 140 znaków.
-**Logowanie**
-By korzystaæ z mo¿liwoœci Microbloga nale¿y siê zalogowaæ poprzez wpisanie loginu i has³a. 
-**Rejestracja**
-Jeœli u¿ytkownik nie posiada danych potrzebnych do rejestracji powinien dokonaæ rejestracji poprzez wype³nienie odpowiedniego formularza, w którym podaje swój unikalny login oraz has³o wraz z potwierdzeniem. 
-**Wyœwietlanie postów**
-Po zalogowaniu widoczne s¹ posty u¿ytkownika oraz wszystkich œledzonych posortowane wed³ug daty dodania.
-**Œledzenie**
-Zak³adka *Follow* odpowiada za zarz¹dzanie œledzonymi. U¿ytkownik mo¿e dodaæ lub usun¹æ œledzonych.
-**Dodawanie postów**
-Posty dodaje siê poprzez wype³nienie pola w zak³adce *Add news*, przy czym d³ugoœæ wiadomoœci nie mo¿e przekroczyæ 140 znaków.
-**Usuwanie postów**
-Posty usuwa siê w zak³adce *My messages*.
+Microblog jest to aplikacja webowa bï¿½dï¿½ca pewnï¿½ formï¿½ dziennika internetowego, ktï¿½rego noï¿½nikiem informacji sï¿½ krï¿½tkie wpisy nieprzekraczajï¿½ce dï¿½ugoï¿½ï¿½ 140 znakï¿½w.
+<br />**Logowanie**<br />
+By korzystaï¿½ z moï¿½liwoï¿½ci Microbloga naleï¿½y siï¿½ zalogowaï¿½ poprzez wpisanie loginu i hasï¿½a. 
+<br />**Rejestracja**<br />
+Jeï¿½li uï¿½ytkownik nie posiada danych potrzebnych do rejestracji powinien dokonaï¿½ rejestracji poprzez wypeï¿½nienie odpowiedniego formularza, w ktï¿½rym podaje swï¿½j unikalny login oraz hasï¿½o wraz z potwierdzeniem. 
+<br />**Wyï¿½wietlanie postï¿½w**<br />
+Po zalogowaniu widoczne sï¿½ posty uï¿½ytkownika oraz wszystkich ï¿½ledzonych posortowane wedï¿½ug daty dodania.
+<br />**ï¿½ledzenie**<br />
+Zakï¿½adka *Follow* odpowiada za zarzï¿½dzanie ï¿½ledzonymi. Uï¿½ytkownik moï¿½e dodaï¿½ lub usunï¿½ï¿½ ï¿½ledzonych.
+<br />**Dodawanie postï¿½w**<br />
+Posty dodaje siï¿½ poprzez wypeï¿½nienie pola w zakï¿½adce *Add news*, przy czym dï¿½ugoï¿½ï¿½ wiadomoï¿½ci nie moï¿½e przekroczyï¿½ 140 znakï¿½w.
+<br />**Usuwanie postï¿½w**<br />
+Posty usuwa siï¿½ w zakï¿½adce *My messages*.
 
