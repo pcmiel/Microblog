@@ -10,6 +10,8 @@ import javax.annotation.Resource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pcmiel.blog.entity.BlogUser;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,6 +65,37 @@ public class UserServiceTest {
 
 		// then
 		assertThat(user).isNull();
+	}
+
+	@Test
+	public void testLoadUserByUsername() throws Exception {
+		// given
+		given2User(USER_NAME1, USER_NAME2);
+
+		// when
+		UserDetails userDetails = userService.loadUserByUsername(USER_NAME1);
+
+		// then
+		assertThat(userDetails).isNotNull();
+	}
+
+	@Test(expected = UsernameNotFoundException.class)
+	public void testLoadUserByUsernameException() throws Exception {
+		userService.loadUserByUsername(null);
+	}
+
+	@Test
+	public void testAddExistUser() throws Exception {
+		// given
+		given2User(USER_NAME1, USER_NAME2);
+		List<BlogUser> beforeUsers = userService.getAllUsers();
+
+		// when
+		givenNewUser(USER_NAME1);
+		List<BlogUser> afterUsers = userService.getAllUsers();
+
+		// then
+		assertThat(beforeUsers.size()).isEqualTo(afterUsers.size());
 	}
 
 	public void given2User(String userName1, String userName2) {

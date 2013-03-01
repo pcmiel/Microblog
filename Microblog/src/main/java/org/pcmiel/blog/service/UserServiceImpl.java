@@ -77,13 +77,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 
 	public BlogUser getLoggedInUser() {
-		Authentication authentication = SecurityContextHolder.getContext()
-				.getAuthentication();
+		Authentication authentication = getLoggedInAuthentication();
 		if (authentication == null) {
 			return null;
 		}
 		User user = (User) authentication.getPrincipal();
 		return userDao.getUserByUserName(user.getUsername());
+	}
+
+	private Authentication getLoggedInAuthentication() {
+		return SecurityContextHolder.getContext().getAuthentication();
 	}
 
 	public void addNewAuthority(String authorityName) {

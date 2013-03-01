@@ -60,6 +60,7 @@ public class BlogUser implements UserDetails, Comparable<BlogUser> {
 	@Column(name = "PASSWORD")
 	private String password;
 
+	@Transient
 	private String confirmPassword;
 
 	public String getConfirmPassword() {
