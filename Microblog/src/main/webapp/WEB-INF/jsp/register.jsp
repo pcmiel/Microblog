@@ -11,7 +11,7 @@
 </head>
 <body>
 	<div class="text-info">
-		<h1>Join to us</h1>
+		<h1>Join us</h1>
 	</div>
 	<div class="pull-left">
 		<form:form method='POST' action="register" commandName="user">

@@ -18,6 +18,7 @@
 		<div class="pull-right">
 			<a href="newMessage"><button class="btn btn-primary">Add New</button></a>
 		</div>
+		<div class="pull-right">
 		<table class="table table-hover">
 			<tbody>
 				<c:forEach items="${posts}" var="post">
@@ -48,6 +49,7 @@
 				</c:forEach>
 			</tbody>
 		</table>
+		</div>
 	</div>
 </body>
 </html>
